@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>NabungYuk — Nabung itu Asik, Masa Depan Cerah</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #F5F7FB;
+            color: #0F172A;
+            transition: background 0.3s, color 0.3s;
+            overflow-x: hidden;
+        }
+        body.dark { background: #0F172A; color: #E2E8F0; }
+
+        .login-page {
+            background: linear-gradient(145deg, #F8FAFC 0%, #EEF2F8 100%);
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            padding: 20px; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 100; overflow-y: auto;
+        }
+        body.dark .login-page { background: linear-gradient(145deg, #0F172A 0%, #1E293B 100%); }
+        .login-card {
+            max-width: 460px; width: 100%; background: white; border-radius: 48px;
+            padding: 40px 32px 48px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15);
+            text-align: center; animation: fadeInUp 0.4s ease-out;
+        }
+        body.dark .login-card { background: #1E293B; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .logo-y {
+            display: inline-flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, #FACC15, #F59E0B);
+            width: 90px; height: 90px; border-radius: 28px;
+            box-shadow: 0 12px 24px -8px rgba(250,204,21,0.4); margin-bottom: 20px;
+        }
+        .logo-title { font-size: 32px; font-weight: 800; background: linear-gradient(135deg, #1E293B, #334155); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        body.dark .logo-title { background: linear-gradient(135deg, #FACC15, #FCD34D); -webkit-background-clip: text; background-clip: text; }
+        .tagline { color: #5B6E8C; font-size: 14px; margin-top: 8px; }
+        .social-buttons { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+        .social-btn {
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            width: 100%; padding: 14px 16px; background: white;
+            border: 1.5px solid #E2E8F0; border-radius: 60px; font-size: 15px;
+            font-weight: 600; color: #1E293B; cursor: pointer; transition: all 0.2s;
+        }
+        body.dark .social-btn { background: #0F172A; border-color: #334155; color: #F1F5F9; }
+        .social-btn:hover { transform: scale(1.02); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .socmed-logo { width: 22px; height: 22px; }
+        .divider { display: flex; align-items: center; gap: 12px; margin: 28px 0 20px; color: #94A3B8; font-size: 13px; }
+        .divider-line { flex: 1; height: 1px; background: #E2E8F0; }
+        .guest-btn {
+            width: 100%; padding: 14px; background: #F8FAFC; border: 1.5px dashed #CBD5E1;
+            border-radius: 60px; font-size: 15px; font-weight: 500; color: #5B6E8C;
+            cursor: pointer; margin-top: 8px; display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+        .guest-btn:hover { border-color: #FACC15; background: #FEFCE8; color: #CA8A04; }
+        .footer-terms { margin-top: 32px; font-size: 11px; color: #94A3B8; }
+        .footer-terms a { color: #F59E0B; text-decoration: none; }
+
+        .dashboard-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px 20px 100px;
+            display: none;
+        }
+        .dashboard-container.active { display: block; }
+
+        .header-elegant {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 28px;
+        }
+        .greeting-section h2 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #1E293B, #334155);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        body.dark .greeting-section h2 {
+            background: linear-gradient(135deg, #FACC15, #FCD34D);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+        .time-row {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin-top: 6px;
+            flex-wrap: wrap;
+        }
+        .real-time-clock {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #FACC15;
+            background: #1E293B;
+            padding: 4px 16px;
+            border-radius: 40px;
+            display: inline-block;
+            font-family: monospace;
+        }
+        body.dark .real-time-clock { background: #FACC15; color: #1E293B; }
+        .date-time { font-size: 13px; color: #5B6E8C; }
+        .settings-icon-elegant {
+            background: #F1F5F9;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .settings-icon-elegant:hover { transform: rotate(30deg); background: #E2E8F0; }
+        body.dark .settings-icon-elegant { background: #334155; color: #FACC15; }
+
+        .level-card {
+            background: white;
+            border-radius: 24px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0,0,0,0.05);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+        body.dark .level-card { background: #1E293B; border-color: #334155; }
+        .level-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .level-badge { font-weight: 700; font-size: 16px; }
+        .level-points { font-size: 12px; color: #F59E0B; background: #FFFBEB; padding: 4px 12px; border-radius: 40px; }
+        .progress-bar-bg { background: #E9EEF3; border-radius: 20px; height: 6px; margin: 10px 0; }
+        .progress-fill { background: #FACC15; width: 0%; height: 6px; border-radius: 20px; transition: width 0.3s; }
+        .streak-row { display: flex; justify-content: space-between; margin-top: 10px; font-size: 12px; color: #5B6E8C; }
+
+        .quote-card {
+            background: linear-gradient(135deg, #FFFBEB, #FEFCE8);
+            border-radius: 20px;
+            padding: 14px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-left: 4px solid #FACC15;
+        }
+        body.dark .quote-card { background: #1E293B; border-left-color: #FACC15; }
+
+        .balance-card-elegant {
+            background: linear-gradient(135deg, #1E293B, #0F172A);
+            border-radius: 32px;
+            padding: 24px;
+            color: white;
+            margin-bottom: 20px;
+        }
+        .balance-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .balance-label { font-size: 14px; opacity: 0.7; }
+        .eye-toggle {
+            background: rgba(255,255,255,0.15);
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 40px;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .eye-toggle:hover { background: rgba(255,255,255,0.25); }
+        .balance-amount-large { font-size: 36px; font-weight: 800; margin: 8px 0 4px; letter-spacing: -1px; }
+
+        .settings-panel-elegant {
+            background: white;
+            border-radius: 28px;
+            padding: 0 16px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            margin-bottom: 0;
+            border: 1px solid #E9EEF3;
+        }
+        body.dark .settings-panel-elegant { background: #1E293B; border-color: #334155; }
+        .settings-panel-elegant.open { max-height: 2000px; margin-bottom: 20px; padding: 16px; }
+        .setting-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #E9EEF3;
+        }
+        body.dark .setting-row { border-bottom-color: #334155; }
+        .setting-label { font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 10px; }
+        .coming-soon-badge {
+            background: #FEF3C7;
+            color: #CA8A04;
+            font-size: 10px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .coming-soon-badge:hover { transform: scale(1.05); background: #FDE68A; }
+        .category-accordion {
+            margin: 8px 0;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #E9EEF3;
+        }
+        .category-header {
+            background: #F8FAFC;
+            padding: 14px 16px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+        .category-header:hover { background: #F1F5F9; }
+        .category-arrow { font-size: 12px; transition: transform 0.2s; }
+        .category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: white;
+        }
+        body.dark .category-content { background: #1E293B; }
+        .category-content.open { max-height: 800px; }
+        .category-content .setting-row { padding: 10px 16px; margin: 0; }
+        .logout-btn-full {
+            background: #FEE2E2;
+            color: #B91C1C;
+            border: none;
+            padding: 14px;
+            border-radius: 40px;
+            width: 100%;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            margin-top: 16px;
+            transition: all 0.2s;
+        }
+        .logout-btn-full:hover { background: #FECACA; transform: scale(0.98); }
+
+        .section-title {
+            font-weight: 600;
+            font-size: 17px;
+            margin: 24px 0 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .add-btn {
+            background: none;
+            border: none;
+            color: #F59E0B;
+            font-size: 20px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .goal-card {
+            background: white;
+            border-radius: 20px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border: 1px solid #E9EEF3;
+            transition: all 0.2s;
+        }
+        .goal-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
+        body.dark .goal-card { background: #1E293B; border-color: #334155; }
+        .progress-bar { background: #E2E8F0; border-radius: 12px; height: 6px; margin: 10px 0; }
+        .progress-fill { background: #FACC15; width: 0%; height: 6px; border-radius: 12px; transition: width 0.3s; }
+        .action-buttons { display: flex; gap: 12px; margin-top: 12px; }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #CBD5E1;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-outline.primary { border-color: #FACC15; background: #FEFCE8; }
+        .btn-outline.primary:hover { background: #FACC15; color: #1E293B; }
+        .empty-state {
+            background: linear-gradient(135deg, #FFFBEB, #FEFCE8);
+            border-radius: 20px;
+            padding: 32px 20px;
+            text-align: center;
+            color: #5B6E8C;
+            border: 1px dashed #FACC15;
+        }
+        .inspiration-card {
+            background: white;
+            border-radius: 16px;
+            padding: 12px 16px;
+            margin-top: 12px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .history-item {
+            background: white;
+            border-radius: 16px;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #E9EEF3;
+        }
+        .history-item.early-withdraw {
+            background: #FEF2F2;
+            color: #B91C1C;
+            text-decoration: line-through;
+        }
+
+        .bottom-nav-iphone {
+            position: fixed;
+            bottom: 16px;
+            left: 16px;
+            right: 16px;
+            max-width: 560px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.96);
+            backdrop-filter: blur(20px);
+            border-radius: 40px;
+            padding: 8px 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            z-index: 100;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        body.dark .bottom-nav-iphone {
+            background: rgba(15,23,42,0.96);
+            border-color: rgba(255,255,255,0.05);
+        }
+        .nav-scroll-container {
+            overflow-x: auto;
+            scrollbar-width: thin;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+        }
+        .nav-scroll-container::-webkit-scrollbar { display: none; }
+        .nav-items-wrapper {
+            display: flex;
+            gap: 8px;
+            padding: 4px 0;
+            justify-content: center;
+            min-width: min-content;
+        }
+        .nav-item-iphone {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: none;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-size: 11px;
+            color: #94A3B8;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .nav-item-iphone.active {
+            background: #FACC15;
+            color: #1E293B;
+            font-weight: 600;
+        }
+        body.dark .nav-item-iphone.active { background: #FACC15; color: #1E293B; }
+        .nav-icon-iphone { font-size: 20px; margin-bottom: 2px; }
+
+        .fab-nabung {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #FACC15, #F59E0B);
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(250,204,21,0.4);
+            cursor: pointer;
+            z-index: 99;
+            transition: all 0.2s;
+            border: none;
+        }
+        .fab-nabung:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(250,204,21,0.5); }
+        .fab-nabung span { font-size: 28px; color: #1E293B; font-weight: 600; }
+        body.dark .fab-nabung span { color: #1E293B; }
+    </style>
+</head>
+<body>
+    <div class="login-page" id="loginPage">
+        <div class="login-card">
+            <div class="logo-y">
+                <svg width="52" height="52" viewBox="0 0 56 56" fill="none">
+                    <rect width="56" height="56" rx="16" fill="#1E293B"/>
+                    <ellipse cx="28" cy="32" rx="14" ry="12" fill="#FACC15" stroke="#1E293B" stroke-width="1.5"/>
+                    <rect x="25" y="26" width="6" height="3" rx="1.5" fill="#1E293B"/>
+                    <path d="M20 20L28 28L36 20" stroke="#1E293B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    <path d="M28 28L28 36" stroke="#1E293B" stroke-width="3" stroke-linecap="round"/>
+                    <circle cx="28" cy="23" r="3" fill="#F59E0B" stroke="#1E293B" stroke-width="1"/>
+                </svg>
+            </div>
+            <div class="logo-title">NabungYuk</div>
+            <div class="tagline">nabung itu asik, masa depan cerah ✨</div>
+            <div class="social-buttons">
+                <button class="social-btn" id="loginGoogle"><img class="socmed-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google"> Google</button>
+                <button class="social-btn" id="loginFacebook"><svg class="socmed-logo" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.96h-1.5c-1.5 0-1.96.93-1.96 1.89v2.26h3.32l-.53 3.49h-2.8V24C19.62 23.1 24 18.1 24 12.07z"/></svg> Facebook</button>
+                <button class="social-btn" id="loginApple"><svg class="socmed-logo" viewBox="0 0 24 24" fill="#000"><path d="M16.365 3.588c.8-.926 1.335-2.21 1.152-3.498-.997.07-2.229.656-2.965 1.55-.672.81-1.266 2.11-1.072 3.34 1.117.072 2.258-.553 2.885-1.392zM21 18.914c-.563 1.226-1.264 2.348-2.187 3.217-1.066.98-1.944 1.135-3.171.605-1.102-.467-2.117-.475-3.253.003-1.453.62-2.12.481-3.18-.485-.92-.841-1.626-1.967-2.189-3.2-1.04-2.286-1.104-5.206.115-7.525.869-1.656 2.226-2.67 3.703-2.915 1.075-.178 2.087.151 2.808.609.271.17.512.368.777.524.317.19.718.246 1.031.076.297-.163.587-.341.886-.489.933-.449 1.987-.826 3.092-.564.924.219 1.7.948 2.089 1.891-2.008 1.134-1.791 3.743.244 4.617-.634 1.4-1.467 2.106-2.465 2.106-.246 0-.497-.028-.748-.078-.696.13-1.347.479-1.877.959z"/></svg> Apple</button>
+                <button class="social-btn" id="loginGithub"><svg class="socmed-logo" viewBox="0 0 24 24" fill="#181717"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.6.113.793-.26.793-.58 0-.287-.01-1.05-.015-2.06-3.338.726-4.043-1.61-4.043-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.73.083-.73 1.205.085 1.84 1.237 1.84 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.775.418-1.305.762-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.123-.3-.535-1.52.117-3.16 0 0 1.008-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.29-1.552 3.297-1.23 3.297-1.23.653 1.64.24 2.86.118 3.16.768.84 1.233 1.91 1.233 3.22 0 4.61-2.804 5.62-5.476 5.92.43.37.823 1.102.823 2.22 0 1.6-.015 2.89-.015 3.28 0 .322.192.696.8.58C20.565 21.795 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg> GitHub</button>
+                <button class="social-btn" id="loginTiktok"><svg class="socmed-logo" viewBox="0 0 24 24" fill="#000000"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg> TikTok</button>
+                <button class="social-btn" id="loginTwitter"><svg class="socmed-logo" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"/></svg> X (Twitter)</button>
+                <button class="social-btn" id="loginWhatsapp"><svg class="socmed-logo" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.472-.15-.67.15-.198.299-.767.967-.94 1.165-.173.199-.347.224-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.058-.173-.298-.018-.459.13-.607.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.15-.67-1.614-.918-2.21-.242-.58-.488-.5-.67-.511-.173-.01-.372-.01-.572-.01-.2 0-.523.074-.797.372s-1.045 1.021-1.045 2.489 1.066 2.885 1.216 3.084c.149.198 2.095 3.2 5.071 4.486.708.307 1.263.49 1.694.626.713.226 1.36.194 1.874.118.573-.085 1.758-.719 2.006-1.413.248-.694.248-1.288.174-1.413-.074-.125-.272-.199-.569-.348zM12.002 21.576c-1.183 0-2.34-.309-3.34-.887l-.24-.143-2.465.647.658-2.403-.156-.25C5.475 17.472 4.6 15.339 4.6 13.09c0-4.071 3.312-7.381 7.382-7.381s7.382 3.31 7.382 7.381-3.312 7.382-7.382 7.382z"/></svg> WhatsApp</button>
+            </div>
+            <div class="divider"><span class="divider-line"></span><span>atau</span><span class="divider-line"></span></div>
+            <button class="guest-btn" id="loginGuest">🎮 Lanjut sebagai Tamu</button>
+            <div class="footer-terms">Dengan masuk, kamu setuju <a href="#">Syarat & Ketentuan</a></div>
+        </div>
+    </div>
+
+    <div class="dashboard-container" id="dashboardContainer">
+        <div class="header-elegant">
+            <div class="greeting-section">
+                <h2 id="greetingName">Memuat...</h2>
+                <div class="time-row">
+                    <div class="real-time-clock" id="realTimeClock">--:--</div>
+                    <div class="date-time" id="dateTimeDisplay"></div>
+                </div>
+            </div>
+            <button class="settings-icon-elegant" id="settingsToggleBtn">⚙️</button>
+        </div>
+
+        <div class="quote-card" id="dailyQuote">
+            <span>📖</span>
+            <span id="quoteText" style="font-size:13px; font-style:italic;">✨ Nabung dikit-dikit lama-lama jadi bukit</span>
+        </div>
+
+        <div class="settings-panel-elegant" id="settingsPanel">
+            <div class="setting-row"><span class="setting-label">🌙 Mode Gelap</span><input type="checkbox" id="darkModeToggle"></div>
+            <div class="setting-row"><span class="setting-label">🔔 Notifikasi Harian (20.00)</span><input type="checkbox" id="notifToggle"></div>
+            <div class="setting-row"><span class="setting-label">📤 Ekspor Data CSV</span><button id="exportBtn" style="background:none; cursor:pointer;">⬇️</button></div>
+
+            <div class="category-accordion"><div class="category-header" onclick="toggleCategory('cat1')"><span>🎮 Gamifikasi & Tantangan</span><span class="category-arrow">▼</span></div>
+            <div class="category-content" id="cat1">
+                <div class="setting-row"><span class="setting-label">🏆 Leaderboard Nasional</span><span class="coming-soon-badge" onclick="showComingSoon('Leaderboard Nasional')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">💎 Challenge 30 Hari</span><span class="coming-soon-badge" onclick="showComingSoon('Challenge 30 Hari')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">🏅 Lencana Pencapaian</span><span class="coming-soon-badge" onclick="showComingSoon('Lencana Pencapaian')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">🎯 Misi Harian & Mingguan</span><span class="coming-soon-badge" onclick="showComingSoon('Misi Harian')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">🎮 Mini Games Dapet Poin</span><span class="coming-soon-badge" onclick="showComingSoon('Mini Games')">Coming Soon</span></div>
+            </div></div>
+
+            <div class="category-accordion"><div class="category-header" onclick="toggleCategory('cat2')"><span>💰 Tabungan & Investasi</span><span class="category-arrow">▼</span></div>
+            <div class="category-content" id="cat2">
+                <div class="setting-row"><span class="setting-label">🤖 Auto Nabung (Rutin Otomatis)</span><span class="coming-soon-badge" onclick="showComingSoon('Auto Nabung')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">🏦 Tarik Tunai ke Semua Bank</span><span class="coming-soon-badge" onclick="showComingSoon('Tarik Tunai')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">🌍 Multi Mata Uang (USD, SGD, JPY)</span><span class="coming-soon-badge" onclick="showComingSoon('Multi Mata Uang')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">🏦 Bunga Tabungan & Investasi Mini</span><span class="coming-soon-badge" onclick="showComingSoon('Investasi Mini')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">💸 Fitur Split Bill / Bayar Patungan</span><span class="coming-soon-badge" onclick="showComingSoon('Split Bill')">Coming Soon</span></div>
+            </div></div>
+
+            <div class="category-accordion"><div class="category-header" onclick="toggleCategory('cat3')"><span>🔗 Integrasi & Koneksi</span><span class="category-arrow">▼</span></div>
+            <div class="category-content" id="cat3">
+                <div class="setting-row"><span class="setting-label">💳 Hubungkan E-Wallet (DANA/OVO/GoPay)</span><span class="coming-soon-badge" onclick="showComingSoon('Hubungkan E-Wallet')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">🔄 API Key untuk Developer</span><span class="coming-soon-badge" onclick="showComingSoon('API Key')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">🔄 Sinkronisasi Multi Device</span><span class="coming-soon-badge" onclick="showComingSoon('Sinkronisasi')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">📱 Widget Home Screen</span><span class="coming-soon-badge" onclick="showComingSoon('Widget')">Coming Soon</span></div>
+            </div></div>
+
+            <div class="category-accordion"><div class="category-header" onclick="toggleCategory('cat4')"><span>🔒 Keamanan & Privasi</span><span class="category-arrow">▼</span></div>
+            <div class="category-content" id="cat4">
+                <div class="setting-row"><span class="setting-label">🔒 Keamanan 2FA (Google Authenticator)</span><span class="coming-soon-badge" onclick="showComingSoon('2FA')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">🔐 Face ID / Fingerprint Login</span><span class="coming-soon-badge" onclick="showComingSoon('Face ID')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">🔒 Mode Privasi Super</span><span class="coming-soon-badge" onclick="showComingSoon('Privasi Super')">Coming Soon</span></div>
+            </div></div>
+
+            <div class="category-accordion"><div class="category-header" onclick="toggleCategory('cat5')"><span>📊 Laporan & Analitik</span><span class="category-arrow">▼</span></div>
+            <div class="category-content" id="cat5">
+                <div class="setting-row"><span class="setting-label">📄 Laporan Keuangan (PDF/Excel)</span><span class="coming-soon-badge" onclick="showComingSoon('Laporan PDF')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">📊 Grafik & Statistik Interaktif</span><span class="coming-soon-badge" onclick="showComingSoon('Grafik')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">📊 Prediksi Nabung (AI)</span><span class="coming-soon-badge" onclick="showComingSoon('Prediksi AI')">Coming Soon</span></div>
+            </div></div>
+
+            <div class="category-accordion"><div class="category-header" onclick="toggleCategory('cat6')"><span>🎁 Voucher & Reward</span><span class="category-arrow">▼</span></div>
+            <div class="category-content" id="cat6">
+                <div class="setting-row"><span class="setting-label">🎁 Voucher Center (Tukar Poin)</span><span class="coming-soon-badge" onclick="showComingSoon('Voucher Center')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">🎮 Top Up Game (ML, FF, PUBG)</span><span class="coming-soon-badge" onclick="showComingSoon('Top Up Game')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">🛍️ Voucher Belanja Shopee/Tokped</span><span class="coming-soon-badge" onclick="showComingSoon('Voucher Belanja')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">📱 Voucher Pulsa & Token Listrik</span><span class="coming-soon-badge" onclick="showComingSoon('Voucher Pulsa')">Coming Soon</span></div>
+            </div></div>
+
+            <div class="category-accordion"><div class="category-header" onclick="toggleCategory('cat7')"><span>🧠 AI & Fitur Cerdas</span><span class="category-arrow">▼</span></div>
+            <div class="category-content" id="cat7">
+                <div class="setting-row"><span class="setting-label">💡 Saran Target Cerdas (AI)</span><span class="coming-soon-badge" onclick="showComingSoon('Saran AI')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">💬 Chatbot AI (Tanya Nabung)</span><span class="coming-soon-badge" onclick="showComingSoon('Chatbot AI')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">🗣️ Voice Command (Nabung Pake Suara)</span><span class="coming-soon-badge" onclick="showComingSoon('Voice Command')">Coming Soon</span></div>
+            </div></div>
+
+            <div class="category-accordion"><div class="category-header" onclick="toggleCategory('cat8')"><span>🔧 Lainnya (Tools)</span><span class="category-arrow">▼</span></div>
+            <div class="category-content" id="cat8">
+                <div class="setting-row"><span class="setting-label">🎓 Edukasi Finansial & Tips</span><span class="coming-soon-badge" onclick="showComingSoon('Edukasi')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">🎨 Tema Kustom (Ubah Warna)</span><span class="coming-soon-badge" onclick="showComingSoon('Tema Kustom')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">📞 Call Center & Live Chat 24/7</span><span class="coming-soon-badge" onclick="showComingSoon('Live Chat')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">🌐 Mode Offline (Catat Dulu)</span><span class="coming-soon-badge" onclick="showComingSoon('Mode Offline')">Coming Soon</span></div>
+            </div></div>
+
+            <button class="logout-btn-full" id="logoutBtn">🚪 Keluar / Ganti Akun</button>
+        </div>
+
+        <div class="level-card">
+            <div class="level-header"><span class="level-badge" id="levelName">Pelajar Nabung</span><span class="level-points" id="pointsDisplay">0 Poin</span></div>
+            <div class="progress-bar-bg"><div class="progress-fill" id="levelProgress" style="width:0%"></div></div>
+            <div class="streak-row">
+                <span>🔥 <span id="streakCount">0</span> hari berturut-turut</span>
+                <span>🎯 <span id="targetCount">0</span> target aktif</span>
+            </div>
+        </div>
+
+        <div class="balance-card-elegant">
+            <div class="balance-header"><span class="balance-label">💰 Total Tabungan Fisik</span><button class="eye-toggle" id="toggleBalanceBtn">👁️</button></div>
+            <div class="balance-amount-large" id="totalSaldoDisplay">Rp 0</div>
+            <div style="font-size:12px; opacity:0.6;">✨ Terus konsisten, ya!</div>
+        </div>
+        <div id="dynamicContent"></div>
+    </div>
+
+    <div class="bottom-nav-iphone" id="bottomNav">
+        <div class="nav-scroll-container">
+            <div class="nav-items-wrapper">
+                <button class="nav-item-iphone active" data-nav="beranda"><span class="nav-icon-iphone">🏠</span><span>Beranda</span></button>
+                <button class="nav-item-iphone" data-nav="target"><span class="nav-icon-iphone">🎯</span><span>Target</span></button>
+                <button class="nav-item-iphone" data-nav="history"><span class="nav-icon-iphone">📜</span><span>Riwayat</span></button>
+                <button class="nav-item-iphone" data-nav="analytics"><span class="nav-icon-iphone">📊</span><span>Analitik</span></button>
+                <button class="nav-item-iphone" data-nav="voucher"><span class="nav-icon-iphone">🎁</span><span>Voucher</span></button>
+                <button class="nav-item-iphone" data-nav="backup"><span class="nav-icon-iphone">💾</span><span>Backup</span></button>
+                <button class="nav-item-iphone" data-nav="settings"><span class="nav-icon-iphone">⚙️</span><span>Settings</span></button>
+            </div>
+        </div>
+    </div>
+
+    <button class="fab-nabung" id="fabNabungBtn"><span>+</span></button>
+
+    <script>
+        // ========== QUOTES ==========
+        const quotes = [
+            "💰 Nabung dikit-dikit lama-lama jadi bukit!",
+            "✨ Masa depan cerah dimulai dari hari ini!",
+            "🎯 Konsistensi lebih penting dari jumlah!",
+            "💪 Kamu bisa! Setor kecil konsisten > besar tapi putus asa.",
+            "🏆 Jangan bandingkan tabunganmu dengan orang lain!",
+            "📈 Mulai dari nominal kecil, yang penting konsisten!",
+            "🌟 Setiap rupiah yang kamu tabung adalah investasi masa depan!",
+            "💎 Disiplin nabung = kunci kebebasan finansial!",
+            "🎯 Target besar bisa dicapai dengan langkah kecil setiap hari!",
+            "🔥 Hari ini nabung, besok senyum!",
+            "💡 Nabung itu kebiasaan, bukan beban!",
+            "🏦 Kaya itu hasil dari kebiasaan baik setiap hari!"
+        ];
+
+        function getRandomQuote() {
+            return quotes[Math.floor(Math.random() * quotes.length)];
+        }
+
+        function setRandomQuote() {
+            const quoteEl = document.getElementById('quoteText');
+            if(quoteEl) quoteEl.innerText = getRandomQuote();
+        }
+
+        // Coming Soon Toast
+        function showComingSoon(message) {
+            let toast = document.createElement('div');
+            toast.innerHTML = `<div style="position: fixed; bottom: 100px; left: 20px; right: 20px; max-width: 360px; margin: 0 auto; background: #1E293B; color: #FACC15; padding: 14px 20px; border-radius: 60px; text-align: center; font-size: 14px; font-weight: 500; z-index: 1000; box-shadow: 0 8px 20px rgba(0,0,0,0.2); backdrop-filter: blur(8px); animation: fadeInUp 0.3s ease;">✨ ${message}<br><span style="font-size: 11px; color: #94A3B8;">Fitur ini akan segera hadir di NabungYuk!</span></div>`;
+            document.body.appendChild(toast);
+            setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 3000);
+        }
+
+        function toggleCategory(catId) {
+            const content = document.getElementById(catId);
+            const arrow = content?.parentElement?.querySelector('.category-arrow');
+            if (content.classList.contains('open')) {
+                content.classList.remove('open');
+                if (arrow) arrow.innerHTML = '▼';
+            } else {
+                content.classList.add('open');
+                if (arrow) arrow.innerHTML = '▲';
+            }
+        }
+
+        // ========== KONEKSI KE BACKEND TERMUX ==========
+        // 🔥 GANTI IP INI DENGAN IP TERMUX LO! 🔥
+        // Cara dapetin IP: ketik 'ifconfig' di Termux, cari angka 192.168.x.x
+        const BACKEND_URL = 'http://192.168.18.2:3000';
+        const BACKEND_TOKEN = 'N4B0ngYuk10?19372';
+
+        // Fungsi Top Up via E-Wallet
+        async function topUpSaldo(amount, method) {
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/topup`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': BACKEND_TOKEN
+                    },
+                    body: JSON.stringify({
+                        amount: amount,
+                        method: method,
+                        user_id: currentUser?.id || 'guest'
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert(`✅ ${result.message}\nTransaction ID: ${result.transaction_id}`);
+                    return result.transaction_id;
+                } else {
+                    alert('❌ Gagal: ' + result.error);
+                    return null;
+                }
+            } catch (error) {
+                console.error('Topup error:', error);
+                alert('❌ Koneksi ke server gagal! Pastikan backend jalan di Termux.\nURL: ' + BACKEND_URL);
+                return null;
+            }
+        }
+
+        // Fungsi Tarik Tunai ke Rekening Bank
+        async function tarikTunai(amount, bankCode, accountNumber, accountName) {
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/withdraw`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': BACKEND_TOKEN
+                    },
+                    body: JSON.stringify({
+                        amount: amount,
+                        bank_code: bankCode,
+                        account_number: accountNumber,
+                        account_name: accountName,
+                        user_id: currentUser?.id || 'guest'
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert(`✅ ${result.message}\nWithdrawal ID: ${result.withdrawal_id}`);
+                    return result.withdrawal_id;
+                } else {
+                    alert('❌ Gagal: ' + result.error);
+                    return null;
+                }
+            } catch (error) {
+                console.error('Withdraw error:', error);
+                alert('❌ Koneksi ke server gagal!');
+                return null;
+            }
+        }
+
+        // Fungsi Tukar Poin ke Voucher (via Backend)
+        async function tukarVoucherBackend(voucherType, pointsUsed) {
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/voucher`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': BACKEND_TOKEN
+                    },
+                    body: JSON.stringify({
+                        voucher_type: voucherType,
+                        points_used: pointsUsed,
+                        user_id: currentUser?.id || 'guest'
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert(`✅ Voucher berhasil ditukar!\nKode: ${result.voucher_code}\nSimpan kode ini untuk digunakan.`);
+                    return result.voucher_code;
+                } else {
+                    alert('❌ Gagal: ' + result.error);
+                    return null;
+                }
+            } catch (error) {
+                console.error('Voucher error:', error);
+                alert('❌ Koneksi ke server gagal!');
+                return null;
+            }
+        }
+
+        // Fungsi cek saldo dari backend
+        async function cekSaldoBackend(userId) {
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/balance/${userId}`, {
+                    headers: { 'Authorization': BACKEND_TOKEN }
+                });
+                const result = await response.json();
+                if (result.success) {
+                    console.log(`💰 Saldo backend: Rp ${result.balance.toLocaleString('id-ID')}`);
+                    return result.balance;
+                }
+                return 0;
+            } catch (error) {
+                console.error('Cek saldo error:', error);
+                return 0;
+            }
+        }
+
+        // ========== DATA & STATE ==========
+        let currentUser = null;
+        let currentNav = "beranda";
+        let settingsOpen = false;
+        let goals = [];
+        let globalPoints = 0;
+        let globalHistory = [];
+        let privacyMode = false;
+        let streak = 0;
+        let lastDepositDate = null;
+
+        function saveUserAndShowDashboard(user) {
+            currentUser = user;
+            localStorage.setItem('nabungyuk_current_user', JSON.stringify(user));
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('dashboardContainer').classList.add('active');
+            loadUserData();
+            renderDashboard();
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
+            setRandomQuote();
+        }
+
+        function loadUserData() {
+            if (!currentUser) return;
+            const raw = localStorage.getItem(`nabungyuk_data_${currentUser.id}`);
+            if (raw) {
+                try {
+                    const d = JSON.parse(raw);
+                    goals = d.goals || [];
+                    globalPoints = d.globalPoints || 0;
+                    globalHistory = d.globalHistory || [];
+                    privacyMode = d.privacyMode || false;
+                    streak = d.streak || 0;
+                    lastDepositDate = d.lastDepositDate || null;
+                } catch(e) {}
+            }
+            if (goals.length === 0) goals = [];
+            updatePointsAndLevel();
+        }
+
+        function saveUserData() {
+            if (!currentUser) return;
+            localStorage.setItem(`nabungyuk_data_${currentUser.id}`, JSON.stringify({ goals, globalPoints, globalHistory, privacyMode, streak, lastDepositDate }));
+        }
+
+        function getTotalSaldo() { return goals.reduce((sum, g) => sum + (g.currentAmount || 0), 0); }
+
+        function updatePointsAndLevel() {
+            const levelElem = document.getElementById('levelName');
+            const pointsElem = document.getElementById('pointsDisplay');
+            const progressFill = document.getElementById('levelProgress');
+            const streakElem = document.getElementById('streakCount');
+            const targetCountElem = document.getElementById('targetCount');
+            if(!levelElem) return;
+            pointsElem.innerText = `${globalPoints} Poin`;
+            let percent = Math.min(100, (globalPoints / 200) * 100);
+            progressFill.style.width = `${percent}%`;
+            if(globalPoints < 50) levelElem.innerText = "🏅Belajar Nabung";
+            else if(globalPoints < 150) levelElem.innerText = "🥈 Pejuang Nabung";
+            else levelElem.innerText = "🏆 Master Tabungan";
+            if(streakElem) streakElem.innerText = streak;
+            if(targetCountElem) targetCountElem.innerText = goals.filter(g => g.currentAmount < g.targetAmount).length;
+        }
+
+        function updateStreak() {
+            const today = new Date().toDateString();
+            if(lastDepositDate !== today) {
+                if(lastDepositDate) {
+                    const yesterday = new Date();
+                    yesterday.setDate(yesterday.getDate() - 1);
+                    if(lastDepositDate === yesterday.toDateString()) streak++;
+                    else streak = 1;
+                } else streak = 1;
+                lastDepositDate = today;
+            }
+        }
+
+        function updateDateTime() {
+            const now = new Date();
+            const hari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+            const bulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+            const dateString = `${hari[now.getDay()]}, ${now.getDate()} ${bulan[now.getMonth()]} ${now.getFullYear()}`;
+            const timeString = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+            const dateTimeElem = document.getElementById('dateTimeDisplay');
+            const clockElem = document.getElementById('realTimeClock');
+            const greetingElem = document.getElementById('greetingName');
+            if (dateTimeElem) dateTimeElem.innerText = dateString;
+            if (clockElem) clockElem.innerText = timeString;
+            if (greetingElem && currentUser) greetingElem.innerText = `Halo ${currentUser.name || 'Sahabat Nabung'}! 👋`;
+        }
+
+        function renderDashboard() {
+            updateDateTime();
+            updatePointsAndLevel();
+            const totalSaldo = getTotalSaldo();
+            const saldoElem = document.getElementById('totalSaldoDisplay');
+            if(privacyMode) saldoElem.innerHTML = '••••••';
+            else saldoElem.innerHTML = `Rp ${totalSaldo.toLocaleString('id-ID')}`;
+            renderDynamicContent();
+        }
+
+        function renderDynamicContent() {
+            const contentDiv = document.getElementById('dynamicContent');
+            if (!contentDiv) return;
+            if (currentNav === 'beranda') renderBeranda(contentDiv);
+            else if (currentNav === 'target') renderTargetPage(contentDiv);
+            else if (currentNav === 'history') renderHistoryPage(contentDiv);
+            else if (currentNav === 'analytics') renderAnalyticsPage(contentDiv);
+            else if (currentNav === 'voucher') renderVoucherPage(contentDiv);
+            else if (currentNav === 'backup') renderBackupPage(contentDiv);
+            else if (currentNav === 'settings') { document.getElementById('settingsToggleBtn').click(); currentNav = 'beranda'; renderBeranda(contentDiv); }
+            const saldoElem = document.getElementById('totalSaldoDisplay');
+            if(privacyMode && saldoElem) saldoElem.innerHTML = '••••••';
+            else if(saldoElem) saldoElem.innerHTML = `Rp ${getTotalSaldo().toLocaleString('id-ID')}`;
+        }
+
+        function renderBeranda(container) {
+            let html = `<div class="section-title"><span>🎯 Rencana Tabungan</span><button class="add-btn" id="addGoalHome">+ Tambah</button></div>`;
+            if (goals.length === 0) {
+                html += `<div class="empty-state">✨ Belum ada rencana tabungan<br><br><strong>💡 Ide untuk kamu:</strong>
+                    <div class="inspiration-card"><span style="font-size:24px;">💻</span><div><strong>Beli Laptop Baru</strong><br>Target: Rp 5.000.000</div><button class="btn-outline primary" onclick="copyExampleGoal('Beli Laptop Baru', 5000000)">+ Gunakan</button></div>
+                    <div class="inspiration-card"><span style="font-size:24px;">✈️</span><div><strong>Liburan Akhir Tahun</strong><br>Target: Rp 3.000.000</div><button class="btn-outline primary" onclick="copyExampleGoal('Liburan Akhir Tahun', 3000000)">+ Gunakan</button></div>
+                    <div class="inspiration-card"><span style="font-size:24px;">🏠</span><div><strong>Dana Darurat</strong><br>Target: Rp 10.000.000</div><button class="btn-outline primary" onclick="copyExampleGoal('Dana Darurat', 10000000)">+ Gunakan</button></div></div>`;
+            } else {
+                goals.forEach(g => {
+                    const percent = (g.currentAmount / g.targetAmount) * 100;
+                    html += `<div class="goal-card"><div style="display:flex; justify-content:space-between;"><strong>${escapeHtml(g.name)}</strong>${percent >= 100 ? '<span style="color:#10B981;">✅ Lunas</span>' : '<span style="color:#F59E0B;">⏳</span>'}</div>
+                    <div class="progress-bar"><div class="progress-fill" style="width:${Math.min(100, percent)}%"></div></div>
+                    <div style="display:flex; justify-content:space-between; font-size:13px;"><span>Rp ${g.currentAmount.toLocaleString('id-ID')}</span><span>Rp ${g.targetAmount.toLocaleString('id-ID')}</span></div>
+                    <div class="action-buttons"><button class="btn-outline primary setorGoal" data-id="${g.id}">➕ Setor</button><button class="btn-outline tarikGoal" data-id="${g.id}">💸 Tarik</button></div></div>`;
+                });
+            }
+            container.innerHTML = html;
+            document.getElementById('addGoalHome')?.addEventListener('click', buatTargetBaru);
+            attachGoalEvents();
+        }
+
+        function renderTargetPage(container) {
+            let html = `<div class="section-title"><span>🎯 Semua Rencana</span><button class="add-btn" id="addTargetPage">+ Tambah</button></div>`;
+            if (goals.length === 0) html += `<div class="empty-state">✨ Belum ada rencana. Yuk buat target pertama!</div>`;
+            else {
+                goals.forEach(g => {
+                    const percent = (g.currentAmount / g.targetAmount) * 100;
+                    html += `<div class="goal-card"><strong>${escapeHtml(g.name)}</strong><div class="progress-bar"><div class="progress-fill" style="width:${Math.min(100, percent)}%"></div></div>
+                    <div style="font-size:13px;">Rp ${g.currentAmount.toLocaleString('id-ID')} / Rp ${g.targetAmount.toLocaleString('id-ID')}</div>
+                    <div class="action-buttons"><button class="btn-outline primary setorGoal" data-id="${g.id}">Setor</button><button class="btn-outline tarikGoal" data-id="${g.id}">Tarik</button></div></div>`;
+                });
+            }
+            container.innerHTML = html;
+            document.getElementById('addTargetPage')?.addEventListener('click', buatTargetBaru);
+            attachGoalEvents();
+        }
+
+        function renderHistoryPage(container) {
+            if (!globalHistory.length) { container.innerHTML = `<div class="empty-state">📭 Belum ada riwayat transaksi<br><br>Mulai setor tabunganmu!</div>`; return; }
+            let html = `<div class="section-title">📜 History of Regret</div><p style="font-size:12px; color:#94A3B8; margin-bottom:12px;">❌ Yang dicoret = penarikan sebelum target tercapai</p>`;
+            globalHistory.slice().reverse().forEach(h => {
+                const isEarly = h.isEarlyWithdraw === true;
+                const earlyClass = isEarly ? 'early-withdraw' : '';
+                const emoji = isEarly ? '❌' : '➕';
+                let amountDisplay = privacyMode ? '••••••' : `Rp ${h.amount.toLocaleString('id-ID')}`;
+                let moodDisplay = h.mood ? ` ${h.mood}` : '';
+                html += `<div class="history-item ${earlyClass}"><div><strong>${emoji} ${amountDisplay}</strong><br><span style="font-size:11px;">${escapeHtml(h.goalName)}${moodDisplay}</span></div><div style="font-size:12px;">${new Date(h.timestamp).toLocaleDateString('id-ID')}</div></div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function renderAnalyticsPage(container) {
+            const totalSaldo = getTotalSaldo();
+            const totalTarget = goals.reduce((sum, g) => sum + g.targetAmount, 0);
+            const progressPercent = totalTarget > 0 ? (totalSaldo / totalTarget * 100).toFixed(0) : 0;
+            const bulanNames = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
+            let monthlyData = [0,0,0,0,0,0,0,0,0,0,0,0];
+            globalHistory.filter(h => h.type === 'deposit').forEach(h => {
+                let month = new Date(h.timestamp).getMonth();
+                monthlyData[month] += h.amount;
+            });
+            let maxValue = Math.max(...monthlyData, 1);
+            let bars = '';
+            for(let i = 0; i < 12; i++) {
+                let height = (monthlyData[i] / maxValue) * 100;
+                bars += `<div style="flex:1; text-align:center;"><div style="background:#FACC15; height:${Math.max(height, 4)}px; width:100%; border-radius:8px; min-height:4px;"></div><div style="font-size:10px; margin-top:6px;">${bulanNames[i]}</div><div style="font-size:9px; color:#5B6E8C;">${monthlyData[i] > 0 ? (monthlyData[i]/1000).toFixed(0) + 'k' : '-'}</div></div>`;
+            }
+            container.innerHTML = `<div class="section-title">📊 Statistik Nabung</div>
+                <div class="goal-card"><strong>💰 Total Tabungan</strong><br>Rp ${totalSaldo.toLocaleString('id-ID')}</div>
+                <div class="goal-card"><strong>🎯 Total Target</strong><br>Rp ${totalTarget.toLocaleString('id-ID')}</div>
+                <div class="goal-card"><strong>📈 Progress Keseluruhan</strong><br><div class="progress-bar"><div class="progress-fill" style="width:${progressPercent}%"></div></div>${progressPercent}%</div>
+                <div class="goal-card"><strong>📊 Grafik Setoran per Bulan</strong><br><div style="display:flex; gap:6px; align-items:flex-end; height:100px; margin-top:12px;">${bars}</div></div>
+                <div class="goal-card"><strong>⭐ Poin Terkumpul</strong><br>${globalPoints} Poin</div>
+                <div class="goal-card"><strong>🔥 Streak Nabung</strong><br>${streak} hari berturut-turut</div>`;
+        }
+
+        function renderVoucherPage(container) {
+            let voucherList = [
+                { id: 1, name: "Voucher Pulsa 10K", icon: "📱", cost: 100 },
+                { id: 2, name: "Voucher Shopee 25K", icon: "🛍️", cost: 250 },
+                { id: 3, name: "Token Listrik 50K", icon: "⚡", cost: 500 },
+                { id: 4, name: "Top Up ML 100 DM", icon: "🎮", cost: 750 },
+                { id: 5, name: "Voucher GoFood 15K", icon: "🍔", cost: 150 }
+            ];
+            let voucherHtml = '';
+            voucherList.forEach(v => {
+                let isAvailable = globalPoints >= v.cost;
+                voucherHtml += `<div class="inspiration-card" style="flex-direction:column; align-items:stretch; gap:10px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;"><div><span style="font-size:24px;">${v.icon}</span> <strong>${v.name}</strong></div><div><span style="font-weight:700;">${v.cost} poin</span></div></div>
+                    <button class="btn-outline primary voucher-tukar" data-cost="${v.cost}" data-name="${v.name}" ${!isAvailable ? 'disabled style="opacity:0.5;"' : ''}>${isAvailable ? '🎁 Tukar Sekarang' : '🔒 Poin Kurang'}</button>
+                </div>`;
+            });
+            container.innerHTML = `<div class="section-title">🎁 Voucher Center</div>
+                <div class="empty-state" style="margin-bottom:12px;"><strong>⭐ Poin Kamu: ${globalPoints}</strong><br><span style="font-size:12px;">Tukarkan poinmu dengan voucher menarik di bawah ini!</span></div>
+                <div style="display:flex; flex-direction:column; gap:12px;">${voucherHtml}</div>
+                <div class="empty-state" style="margin-top:16px;">✨ Voucher akan dikirim via email setelah tukar!</div>`;
+            document.querySelectorAll('.voucher-tukar').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    let cost = parseInt(btn.dataset.cost);
+                    let name = btn.dataset.name;
+                    if(globalPoints >= cost) {
+                        globalPoints -= cost;
+                        let uniqueCode = `NBYK-${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
+                        saveUserData();
+                        renderDashboard();
+                        alert(`✅ Berhasil tukar ${name}!\nKode Voucher: ${uniqueCode}\nSimpan kode ini untuk digunakan.`);
+                    } else { alert("Poin tidak cukup!"); }
+                });
+            });
+        }
+
+        function renderBackupPage(container) {
+            container.innerHTML = `<div class="section-title">💾 Backup & Restore</div>
+                <div class="goal-card"><div class="setting-row"><span>📤 Backup Data ke File</span><button id="backupNowBtn" class="btn-outline primary">Backup</button></div>
+                <div class="setting-row"><span>📥 Restore dari File</span><button id="restoreNowBtn" class="btn-outline primary">Restore</button><input type="file" id="restoreFile" style="display:none;"></div></div>
+                <div class="empty-state">⚠️ Simpan data tabunganmu secara berkala agar tidak hilang.</div>`;
+            document.getElementById('backupNowBtn')?.addEventListener('click', () => {
+                const dataStr = JSON.stringify({ goals, globalPoints, globalHistory, streak, lastDepositDate }, null, 2);
+                const blob = new Blob([dataStr], {type: 'application/json'});
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `nabungyuk_backup_${Date.now()}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+                alert("Backup berhasil!");
+            });
+            document.getElementById('restoreNowBtn')?.addEventListener('click', () => document.getElementById('restoreFile').click());
+            document.getElementById('restoreFile')?.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if(file) {
+                    const reader = new FileReader();
+                    reader.onload = (ev) => {
+                        try {
+                            const data = JSON.parse(ev.target.result);
+                            goals = data.goals || [];
+                            globalPoints = data.globalPoints || 0;
+                            globalHistory = data.globalHistory || [];
+                            streak = data.streak || 0;
+                            lastDepositDate = data.lastDepositDate || null;
+                            saveUserData();
+                            renderDashboard();
+                            alert("Restore berhasil!");
+                        } catch(err) { alert("File tidak valid"); }
+                    };
+                    reader.readAsText(file);
+                }
+            });
+        }
+
+        function attachGoalEvents() {
+            document.querySelectorAll('.setorGoal').forEach(btn => btn.addEventListener('click', () => transactionPrompt(parseInt(btn.dataset.id), 'deposit')));
+            document.querySelectorAll('.tarikGoal').forEach(btn => btn.addEventListener('click', () => transactionPrompt(parseInt(btn.dataset.id), 'withdraw')));
+        }
+
+        function transactionPrompt(goalId, type) {
+            const goal = goals.find(g => g.id === goalId);
+            if (!goal) return;
+            const amount = parseInt(prompt(`${type === 'deposit' ? 'Setor ke' : 'Tarik dari'} "${goal.name}"\nMasukkan nominal (Rp):`, type === 'deposit' ? '50000' : '20000'));
+            if (isNaN(amount)) return;
+            if (type === 'withdraw' && goal.currentAmount < amount) { alert(`Saldo tidak cukup!`); return; }
+            if (type === 'deposit') {
+                let mood = prompt("Bagaimana perasaanmu saat nabung hari ini?\n(😊 Senang / 😐 Biasa / 😢 Terpaksa / 🔥 Semangat)");
+                goal.currentAmount += amount;
+                globalHistory.push({ id: Date.now(), type: 'deposit', amount, goalId: goal.id, goalName: goal.name, timestamp: new Date().toISOString(), isEarlyWithdraw: false, mood: mood || '😊' });
+                globalPoints += 2;
+                updateStreak();
+            } else {
+                const wasReached = goal.currentAmount >= goal.targetAmount;
+                goal.currentAmount -= amount;
+                globalHistory.push({ id: Date.now(), type: 'withdraw', amount, goalId: goal.id, goalName: goal.name, timestamp: new Date().toISOString(), isEarlyWithdraw: !wasReached });
+                if (!wasReached) alert("⚠️ Penarikan ini DICORET MERAH karena target belum tercapai!");
+            }
+            saveUserData();
+            renderDashboard();
+        }
+
+        function buatTargetBaru() {
+            let name = prompt("Apa rencana tabunganmu?\nContoh: Beli Laptop, Liburan, atau Dana Darurat");
+            if (!name || name.trim() === "") return;
+            let targetInput = prompt(`Berapa target nominal untuk "${name}"?\nContoh: 1000000`);
+            if (!targetInput || isNaN(parseInt(targetInput))) return;
+            goals.push({ id: Date.now(), name: name.trim().substring(0, 40), targetAmount: parseInt(targetInput), currentAmount: 0 });
+            saveUserData();
+            renderDashboard();
+            alert(`✅ Rencana "${name}" berhasil dibuat! Mulai nabung sekarang.`);
+        }
+
+        window.copyExampleGoal = function(name, target) {
+            goals.push({ id: Date.now(), name: name, targetAmount: target, currentAmount: 0 });
+            saveUserData();
+            renderDashboard();
+            alert(`✅ Rencana "${name}" berhasil ditambahkan! Yuk mulai nabung.`);
+        };
+
+        function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
+
+        // ========== EVENT LISTENER LOGIN ==========
+        document.getElementById('loginGoogle').onclick = () => saveUserAndShowDashboard({ id: "g_"+Date.now(), name: "User_"+Math.floor(Math.random()*1000), provider: "Google" });
+        document.getElementById('loginFacebook').onclick = () => saveUserAndShowDashboard({ id: "fb_"+Date.now(), name: "FB_"+Math.floor(Math.random()*1000), provider: "Facebook" });
+        document.getElementById('loginApple').onclick = () => saveUserAndShowDashboard({ id: "ap_"+Date.now(), name: "AppleUser", provider: "Apple" });
+        document.getElementById('loginGithub').onclick = () => { let u = prompt("Username GitHub:", "nabungyuk_user"); saveUserAndShowDashboard({ id: "gh_"+Date.now(), name: u || "GitHubber", provider: "GitHub" }); };
+        document.getElementById('loginTiktok').onclick = () => { let username = prompt("Masukkan username TikTok:", "tiktok_user"); saveUserAndShowDashboard({ id: "tt_"+Date.now(), name: username || "TikToker", provider: "TikTok" }); };
+        document.getElementById('loginTwitter').onclick = () => saveUserAndShowDashboard({ id: "tw_"+Date.now(), name: "Xplorer", provider: "X" });
+        document.getElementById('loginWhatsapp').onclick = () => { let p = prompt("Nomor WhatsApp:", "088225879928"); saveUserAndShowDashboard({ id: "wa_"+Date.now(), name: p || "WA_User", provider: "WhatsApp" }); };
+        document.getElementById('loginGuest').onclick = () => saveUserAndShowDashboard({ id: "guest_"+Date.now(), name: "Tamu_"+Math.floor(Math.random()*10000), provider: "Guest" });
+
+        // ========== EVENT LISTENER SETTINGS ==========
+        document.getElementById('settingsToggleBtn').onclick = () => { const panel = document.getElementById('settingsPanel'); settingsOpen = !settingsOpen; settingsOpen ? panel.classList.add('open') : panel.classList.remove('open'); };
+        document.getElementById('darkModeToggle').onchange = (e) => { if(e.target.checked) document.body.classList.add('dark'); else document.body.classList.remove('dark'); };
+        document.getElementById('exportBtn').onclick = () => {
+            const dataStr = JSON.stringify({ goals, globalPoints, globalHistory, streak, lastDepositDate }, null, 2);
+            const blob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `nabungyuk_data_${Date.now()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            alert("Data berhasil diekspor!");
+        };
+        document.getElementById('logoutBtn').onclick = () => { localStorage.removeItem('nabungyuk_current_user'); location.reload(); };
+
+        document.getElementById('toggleBalanceBtn').onclick = () => {
+            privacyMode = !privacyMode;
+            saveUserData();
+            const totalSaldo = getTotalSaldo();
+            document.getElementById('totalSaldoDisplay').innerHTML = privacyMode ? '••••••' : `Rp ${totalSaldo.toLocaleString('id-ID')}`;
+            document.getElementById('toggleBalanceBtn').innerHTML = privacyMode ? '🙈' : '👁️';
+        };
+
+        document.getElementById('fabNabungBtn').onclick = () => {
+            if(goals.length === 0) { alert("Buat target dulu ya!"); buatTargetBaru(); return; }
+            let goalList = goals.map((g, i) => `${i+1}. ${g.name}`).join('\n');
+            let idx = prompt(`Pilih target:\n${goalList}\n\nMasukkan nomor target:`, "1");
+            if(idx && !isNaN(parseInt(idx)) && goals[parseInt(idx)-1]) transactionPrompt(goals[parseInt(idx)-1].id, 'deposit');
+            else alert("Pilihan tidak valid");
+        };
+
+        document.querySelectorAll('.nav-item-iphone').forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentNav = btn.dataset.nav;
+                document.querySelectorAll('.nav-item-iphone').forEach(nav => nav.classList.remove('active'));
+                btn.classList.add('active');
+                renderDynamicContent();
+            });
+        });
+
+        // ========== CEK USER SUDAH LOGIN ==========
+        const savedUser = localStorage.getItem('nabungyuk_current_user');
+        if (savedUser) {
+            try {
+                currentUser = JSON.parse(savedUser);
+                document.getElementById('loginPage').style.display = 'none';
+                document.getElementById('dashboardContainer').classList.add('active');
+                loadUserData();
+                renderDashboard();
+                updateDateTime();
+                setInterval(updateDateTime, 1000);
+                setRandomQuote();
+                setInterval(setRandomQuote, 30000);
+            } catch(e) {}
+        }
+    </script>
+</body>
+</html>
