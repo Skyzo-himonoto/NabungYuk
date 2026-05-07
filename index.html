@@ -16,6 +16,7 @@
         }
         body.dark { background: #0F172A; color: #E2E8F0; }
 
+        /* Login Page */
         .login-page {
             background: linear-gradient(145deg, #F8FAFC 0%, #EEF2F8 100%);
             min-height: 100vh; display: flex; align-items: center; justify-content: center;
@@ -60,14 +61,16 @@
         .footer-terms { margin-top: 32px; font-size: 11px; color: #94A3B8; }
         .footer-terms a { color: #F59E0B; text-decoration: none; }
 
+        /* Dashboard Container */
         .dashboard-container {
             max-width: 600px;
             margin: 0 auto;
-            padding: 20px 20px 100px;
+            padding: 20px 20px 120px;
             display: none;
         }
         .dashboard-container.active { display: block; }
 
+        /* Header */
         .header-elegant {
             display: flex;
             justify-content: space-between;
@@ -124,6 +127,7 @@
         .settings-icon-elegant:hover { transform: rotate(30deg); background: #E2E8F0; }
         body.dark .settings-icon-elegant { background: #334155; color: #FACC15; }
 
+        /* Level Card */
         .level-card {
             background: white;
             border-radius: 24px;
@@ -140,6 +144,7 @@
         .progress-fill { background: #FACC15; width: 0%; height: 6px; border-radius: 20px; transition: width 0.3s; }
         .streak-row { display: flex; justify-content: space-between; margin-top: 10px; font-size: 12px; color: #5B6E8C; }
 
+        /* Quote Card */
         .quote-card {
             background: linear-gradient(135deg, #FFFBEB, #FEFCE8);
             border-radius: 20px;
@@ -152,6 +157,7 @@
         }
         body.dark .quote-card { background: #1E293B; border-left-color: #FACC15; }
 
+        /* Balance Card */
         .balance-card-elegant {
             background: linear-gradient(135deg, #1E293B, #0F172A);
             border-radius: 32px;
@@ -179,6 +185,7 @@
         .eye-toggle:hover { background: rgba(255,255,255,0.25); }
         .balance-amount-large { font-size: 36px; font-weight: 800; margin: 8px 0 4px; letter-spacing: -1px; }
 
+        /* Settings Panel */
         .settings-panel-elegant {
             background: white;
             border-radius: 28px;
@@ -253,6 +260,7 @@
         }
         .logout-btn-full:hover { background: #FECACA; transform: scale(0.98); }
 
+        /* Section Title */
         .section-title {
             font-weight: 600;
             font-size: 17px;
@@ -327,13 +335,13 @@
             text-decoration: line-through;
         }
 
+        /* Bottom Nav - HANYA UNTUK DASHBOARD */
         .bottom-nav-iphone {
             position: fixed;
             bottom: 16px;
             left: 16px;
             right: 16px;
-            max-width: 560px;
-            margin: 0 auto;
+            max-width: calc(100% - 32px);
             background: rgba(255,255,255,0.96);
             backdrop-filter: blur(20px);
             border-radius: 40px;
@@ -341,6 +349,14 @@
             box-shadow: 0 8px 25px rgba(0,0,0,0.1);
             z-index: 100;
             border: 1px solid rgba(255,255,255,0.2);
+        }
+        @media (min-width: 600px) {
+            .bottom-nav-iphone {
+                max-width: 560px;
+                left: 50%;
+                transform: translateX(-50%);
+                right: auto;
+            }
         }
         body.dark .bottom-nav-iphone {
             background: rgba(15,23,42,0.96);
@@ -382,6 +398,7 @@
         body.dark .nav-item-iphone.active { background: #FACC15; color: #1E293B; }
         .nav-icon-iphone { font-size: 20px; margin-bottom: 2px; }
 
+        /* FAB - HANYA UNTUK DASHBOARD */
         .fab-nabung {
             position: fixed;
             bottom: 90px;
@@ -405,6 +422,7 @@
     </style>
 </head>
 <body>
+    <!-- LOGIN PAGE -->
     <div class="login-page" id="loginPage">
         <div class="login-card">
             <div class="logo-y">
@@ -434,6 +452,7 @@
         </div>
     </div>
 
+    <!-- DASHBOARD CONTAINER (Bottom Nav & FAB ADA DI DALAM SINI) -->
     <div class="dashboard-container" id="dashboardContainer">
         <div class="header-elegant">
             <div class="greeting-section">
@@ -523,7 +542,7 @@
         </div>
 
         <div class="level-card">
-            <div class="level-header"><span class="level-badge" id="levelName">Pelajar Nabung</span><span class="level-points" id="pointsDisplay">0 Poin</span></div>
+            <div class="level-header"><span class="level-badge" id="levelName">Belajar Nabung</span><span class="level-points" id="pointsDisplay">0 Poin</span></div>
             <div class="progress-bar-bg"><div class="progress-fill" id="levelProgress" style="width:0%"></div></div>
             <div class="streak-row">
                 <span>🔥 <span id="streakCount">0</span> hari berturut-turut</span>
@@ -536,24 +555,26 @@
             <div class="balance-amount-large" id="totalSaldoDisplay">Rp 0</div>
             <div style="font-size:12px; opacity:0.6;">✨ Terus konsisten, ya!</div>
         </div>
+        
         <div id="dynamicContent"></div>
-    </div>
 
-    <div class="bottom-nav-iphone" id="bottomNav">
-        <div class="nav-scroll-container">
-            <div class="nav-items-wrapper">
-                <button class="nav-item-iphone active" data-nav="beranda"><span class="nav-icon-iphone">🏠</span><span>Beranda</span></button>
-                <button class="nav-item-iphone" data-nav="target"><span class="nav-icon-iphone">🎯</span><span>Target</span></button>
-                <button class="nav-item-iphone" data-nav="history"><span class="nav-icon-iphone">📜</span><span>Riwayat</span></button>
-                <button class="nav-item-iphone" data-nav="analytics"><span class="nav-icon-iphone">📊</span><span>Analitik</span></button>
-                <button class="nav-item-iphone" data-nav="voucher"><span class="nav-icon-iphone">🎁</span><span>Voucher</span></button>
-                <button class="nav-item-iphone" data-nav="backup"><span class="nav-icon-iphone">💾</span><span>Backup</span></button>
-                <button class="nav-item-iphone" data-nav="settings"><span class="nav-icon-iphone">⚙️</span><span>Settings</span></button>
+        <!-- ========== BOTTOM NAV & FAB (ADA DI DALAM DASHBOARD CONTAINER) ========== -->
+        <div class="bottom-nav-iphone" id="bottomNav">
+            <div class="nav-scroll-container">
+                <div class="nav-items-wrapper">
+                    <button class="nav-item-iphone active" data-nav="beranda"><span class="nav-icon-iphone">🏠</span><span>Beranda</span></button>
+                    <button class="nav-item-iphone" data-nav="target"><span class="nav-icon-iphone">🎯</span><span>Target</span></button>
+                    <button class="nav-item-iphone" data-nav="history"><span class="nav-icon-iphone">📜</span><span>Riwayat</span></button>
+                    <button class="nav-item-iphone" data-nav="analytics"><span class="nav-icon-iphone">📊</span><span>Analitik</span></button>
+                    <button class="nav-item-iphone" data-nav="voucher"><span class="nav-icon-iphone">🎁</span><span>Voucher</span></button>
+                    <button class="nav-item-iphone" data-nav="backup"><span class="nav-icon-iphone">💾</span><span>Backup</span></button>
+                    <button class="nav-item-iphone" data-nav="settings"><span class="nav-icon-iphone">⚙️</span><span>Settings</span></button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <button class="fab-nabung" id="fabNabungBtn"><span>+</span></button>
+        <button class="fab-nabung" id="fabNabungBtn"><span>+</span></button>
+    </div>
 
     <script>
         // ========== QUOTES ==========
@@ -581,7 +602,6 @@
             if(quoteEl) quoteEl.innerText = getRandomQuote();
         }
 
-        // Coming Soon Toast
         function showComingSoon(message) {
             let toast = document.createElement('div');
             toast.innerHTML = `<div style="position: fixed; bottom: 100px; left: 20px; right: 20px; max-width: 360px; margin: 0 auto; background: #1E293B; color: #FACC15; padding: 14px 20px; border-radius: 60px; text-align: center; font-size: 14px; font-weight: 500; z-index: 1000; box-shadow: 0 8px 20px rgba(0,0,0,0.2); backdrop-filter: blur(8px); animation: fadeInUp 0.3s ease;">✨ ${message}<br><span style="font-size: 11px; color: #94A3B8;">Fitur ini akan segera hadir di NabungYuk!</span></div>`;
@@ -601,13 +621,11 @@
             }
         }
 
-        // ========== KONEKSI KE BACKEND TERMUX ==========
-        // 🔥 GANTI IP INI DENGAN IP TERMUX LO! 🔥
-        // Cara dapetin IP: ketik 'ifconfig' di Termux, cari angka 192.168.x.x
+        // ========== KONEKSI KE BACKEND ==========
+        // GANTI DENGAN IP TERMUX LO!
         const BACKEND_URL = 'http://192.168.18.2:3000';
         const BACKEND_TOKEN = 'N4B0ngYuk10?19372';
 
-        // Fungsi Top Up via E-Wallet
         async function topUpSaldo(amount, method) {
             try {
                 const response = await fetch(`${BACKEND_URL}/api/topup`, {
@@ -622,9 +640,7 @@
                         user_id: currentUser?.id || 'guest'
                     })
                 });
-                
                 const result = await response.json();
-                
                 if (result.success) {
                     alert(`✅ ${result.message}\nTransaction ID: ${result.transaction_id}`);
                     return result.transaction_id;
@@ -639,7 +655,6 @@
             }
         }
 
-        // Fungsi Tarik Tunai ke Rekening Bank
         async function tarikTunai(amount, bankCode, accountNumber, accountName) {
             try {
                 const response = await fetch(`${BACKEND_URL}/api/withdraw`, {
@@ -656,9 +671,7 @@
                         user_id: currentUser?.id || 'guest'
                     })
                 });
-                
                 const result = await response.json();
-                
                 if (result.success) {
                     alert(`✅ ${result.message}\nWithdrawal ID: ${result.withdrawal_id}`);
                     return result.withdrawal_id;
@@ -673,7 +686,6 @@
             }
         }
 
-        // Fungsi Tukar Poin ke Voucher (via Backend)
         async function tukarVoucherBackend(voucherType, pointsUsed) {
             try {
                 const response = await fetch(`${BACKEND_URL}/api/voucher`, {
@@ -688,11 +700,9 @@
                         user_id: currentUser?.id || 'guest'
                     })
                 });
-                
                 const result = await response.json();
-                
                 if (result.success) {
-                    alert(`✅ Voucher berhasil ditukar!\nKode: ${result.voucher_code}\nSimpan kode ini untuk digunakan.`);
+                    alert(`✅ Voucher berhasil ditukar!\nKode: ${result.voucher_code}`);
                     return result.voucher_code;
                 } else {
                     alert('❌ Gagal: ' + result.error);
@@ -702,24 +712,6 @@
                 console.error('Voucher error:', error);
                 alert('❌ Koneksi ke server gagal!');
                 return null;
-            }
-        }
-
-        // Fungsi cek saldo dari backend
-        async function cekSaldoBackend(userId) {
-            try {
-                const response = await fetch(`${BACKEND_URL}/api/balance/${userId}`, {
-                    headers: { 'Authorization': BACKEND_TOKEN }
-                });
-                const result = await response.json();
-                if (result.success) {
-                    console.log(`💰 Saldo backend: Rp ${result.balance.toLocaleString('id-ID')}`);
-                    return result.balance;
-                }
-                return 0;
-            } catch (error) {
-                console.error('Cek saldo error:', error);
-                return 0;
             }
         }
 
@@ -781,7 +773,7 @@
             pointsElem.innerText = `${globalPoints} Poin`;
             let percent = Math.min(100, (globalPoints / 200) * 100);
             progressFill.style.width = `${percent}%`;
-            if(globalPoints < 50) levelElem.innerText = "🏅Belajar Nabung";
+            if(globalPoints < 50) levelElem.innerText = "🥉 Belajar Nabung";
             else if(globalPoints < 150) levelElem.innerText = "🥈 Pejuang Nabung";
             else levelElem.innerText = "🏆 Master Tabungan";
             if(streakElem) streakElem.innerText = streak;
@@ -1037,7 +1029,7 @@
 
         function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
 
-        // ========== EVENT LISTENER LOGIN ==========
+        // ========== EVENT LISTENER ==========
         document.getElementById('loginGoogle').onclick = () => saveUserAndShowDashboard({ id: "g_"+Date.now(), name: "User_"+Math.floor(Math.random()*1000), provider: "Google" });
         document.getElementById('loginFacebook').onclick = () => saveUserAndShowDashboard({ id: "fb_"+Date.now(), name: "FB_"+Math.floor(Math.random()*1000), provider: "Facebook" });
         document.getElementById('loginApple').onclick = () => saveUserAndShowDashboard({ id: "ap_"+Date.now(), name: "AppleUser", provider: "Apple" });
@@ -1047,7 +1039,6 @@
         document.getElementById('loginWhatsapp').onclick = () => { let p = prompt("Nomor WhatsApp:", "088225879928"); saveUserAndShowDashboard({ id: "wa_"+Date.now(), name: p || "WA_User", provider: "WhatsApp" }); };
         document.getElementById('loginGuest').onclick = () => saveUserAndShowDashboard({ id: "guest_"+Date.now(), name: "Tamu_"+Math.floor(Math.random()*10000), provider: "Guest" });
 
-        // ========== EVENT LISTENER SETTINGS ==========
         document.getElementById('settingsToggleBtn').onclick = () => { const panel = document.getElementById('settingsPanel'); settingsOpen = !settingsOpen; settingsOpen ? panel.classList.add('open') : panel.classList.remove('open'); };
         document.getElementById('darkModeToggle').onchange = (e) => { if(e.target.checked) document.body.classList.add('dark'); else document.body.classList.remove('dark'); };
         document.getElementById('exportBtn').onclick = () => {
@@ -1088,7 +1079,6 @@
             });
         });
 
-        // ========== CEK USER SUDAH LOGIN ==========
         const savedUser = localStorage.getItem('nabungyuk_current_user');
         if (savedUser) {
             try {
