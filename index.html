@@ -58,11 +58,10 @@
         .guest-btn:hover { border-color: #FACC15; background: #FEFCE8; color: #CA8A04; }
         .footer-terms { margin-top: 32px; font-size: 11px; color: #94A3B8; }
         .footer-terms a { color: #F59E0B; text-decoration: none; }
-
         .dashboard-container {
             max-width: 600px;
             margin: 0 auto;
-            padding: 20px 20px 100px;
+            padding: 20px 20px 120px;
             display: none;
         }
         .dashboard-container.active { display: block; }
@@ -331,8 +330,7 @@
             bottom: 16px;
             left: 16px;
             right: 16px;
-            max-width: 560px;
-            margin: 0 auto;
+            max-width: calc(100% - 32px);
             background: rgba(255,255,255,0.96);
             backdrop-filter: blur(20px);
             border-radius: 40px;
@@ -340,6 +338,14 @@
             box-shadow: 0 8px 25px rgba(0,0,0,0.1);
             z-index: 100;
             border: 1px solid rgba(255,255,255,0.2);
+        }
+        @media (min-width: 600px) {
+            .bottom-nav-iphone {
+                max-width: 560px;
+                left: 50%;
+                transform: translateX(-50%);
+                right: auto;
+            }
         }
         body.dark .bottom-nav-iphone {
             background: rgba(15,23,42,0.96);
@@ -432,7 +438,6 @@
             <div class="footer-terms">Dengan masuk, kamu setuju <a href="#">Syarat & Ketentuan</a></div>
         </div>
     </div>
-
     <div class="dashboard-container" id="dashboardContainer">
         <div class="header-elegant">
             <div class="greeting-section">
@@ -522,7 +527,7 @@
         </div>
 
         <div class="level-card">
-            <div class="level-header"><span class="level-badge" id="levelName">Pelajar Nabung</span><span class="level-points" id="pointsDisplay">0 Poin</span></div>
+            <div class="level-header"><span class="level-badge" id="levelName">Belajar Nabung</span><span class="level-points" id="pointsDisplay">0 Poin</span></div>
             <div class="progress-bar-bg"><div class="progress-fill" id="levelProgress" style="width:0%"></div></div>
             <div class="streak-row">
                 <span>🔥 <span id="streakCount">0</span> hari berturut-turut</span>
@@ -535,26 +540,28 @@
             <div class="balance-amount-large" id="totalSaldoDisplay">Rp 0</div>
             <div style="font-size:12px; opacity:0.6;">✨ Terus konsisten, ya!</div>
         </div>
+        
         <div id="dynamicContent"></div>
-    </div>
 
-    <div class="bottom-nav-iphone" id="bottomNav">
-        <div class="nav-scroll-container">
-            <div class="nav-items-wrapper">
-                <button class="nav-item-iphone active" data-nav="beranda"><span class="nav-icon-iphone">🏠</span><span>Beranda</span></button>
-                <button class="nav-item-iphone" data-nav="target"><span class="nav-icon-iphone">🎯</span><span>Target</span></button>
-                <button class="nav-item-iphone" data-nav="history"><span class="nav-icon-iphone">📜</span><span>Riwayat</span></button>
-                <button class="nav-item-iphone" data-nav="analytics"><span class="nav-icon-iphone">📊</span><span>Analitik</span></button>
-                <button class="nav-item-iphone" data-nav="voucher"><span class="nav-icon-iphone">🎁</span><span>Voucher</span></button>
-                <button class="nav-item-iphone" data-nav="backup"><span class="nav-icon-iphone">💾</span><span>Backup</span></button>
-                <button class="nav-item-iphone" data-nav="settings"><span class="nav-icon-iphone">⚙️</span><span>Settings</span></button>
+        <div class="bottom-nav-iphone" id="bottomNav">
+            <div class="nav-scroll-container">
+                <div class="nav-items-wrapper">
+                    <button class="nav-item-iphone active" data-nav="beranda"><span class="nav-icon-iphone">🏠</span><span>Beranda</span></button>
+                    <button class="nav-item-iphone" data-nav="target"><span class="nav-icon-iphone">🎯</span><span>Target</span></button>
+                    <button class="nav-item-iphone" data-nav="history"><span class="nav-icon-iphone">📜</span><span>Riwayat</span></button>
+                    <button class="nav-item-iphone" data-nav="analytics"><span class="nav-icon-iphone">📊</span><span>Analitik</span></button>
+                    <button class="nav-item-iphone" data-nav="voucher"><span class="nav-icon-iphone">🎁</span><span>Voucher</span></button>
+                    <button class="nav-item-iphone" data-nav="backup"><span class="nav-icon-iphone">💾</span><span>Backup</span></button>
+                    <button class="nav-item-iphone" data-nav="settings"><span class="nav-icon-iphone">⚙️</span><span>Settings</span></button>
+                </div>
             </div>
         </div>
+
+        <button class="fab-nabung" id="fabNabungBtn"><span>+</span></button>
     </div>
 
-    <button class="fab-nabung" id="fabNabungBtn"><span>+</span></button>
-
     <script>
+        // ========== QUOTES ==========
         const quotes = [
             "💰 Nabung dikit-dikit lama-lama jadi bukit!",
             "✨ Masa depan cerah dimulai dari hari ini!",
@@ -567,12 +574,18 @@
             "🎯 Target besar bisa dicapai dengan langkah kecil setiap hari!",
             "🔥 Hari ini nabung, besok senyum!",
             "💡 Nabung itu kebiasaan, bukan beban!",
-            "🏦 Kaya itu hasil dari kebiasaan baik setiap hari!"
-            "📊 jadikan dirimu grafik, semakin kamu tinggi nabungnya semakin kamu dikenal orang"
+            "🏦 Kaya itu hasil dari kebiasaan baik setiap hari!", 
+            "💰 uang receh di kumpulkan banyak, bisa loh!",
+            "🤝 Ga boleh malas nabung yah, konsisten dan semangat! ",
         ];
 
         function getRandomQuote() {
             return quotes[Math.floor(Math.random() * quotes.length)];
+        }
+
+        function setRandomQuote() {
+            const quoteEl = document.getElementById('quoteText');
+            if(quoteEl) quoteEl.innerText = getRandomQuote();
         }
 
         function showComingSoon(message) {
@@ -591,6 +604,98 @@
             } else {
                 content.classList.add('open');
                 if (arrow) arrow.innerHTML = '▲';
+            }
+        }
+
+        const BACKEND_URL = 'http://192.168.18.2:3000';
+        const BACKEND_TOKEN = 'N4B0ngYuk10?19372';
+
+        async function topUpSaldo(amount, method) {
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/topup`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': BACKEND_TOKEN
+                    },
+                    body: JSON.stringify({
+                        amount: amount,
+                        method: method,
+                        user_id: currentUser?.id || 'guest'
+                    })
+                });
+                const result = await response.json();
+                if (result.success) {
+                    alert(`✅ ${result.message}\nTransaction ID: ${result.transaction_id}`);
+                    return result.transaction_id;
+                } else {
+                    alert('❌ Gagal: ' + result.error);
+                    return null;
+                }
+            } catch (error) {
+                console.error('Topup error:', error);
+                alert('❌ Koneksi ke server gagal! Pastikan backend jalan di Termux.\nURL: ' + BACKEND_URL);
+                return null;
+            }
+        }
+
+        async function tarikTunai(amount, bankCode, accountNumber, accountName) {
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/withdraw`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': BACKEND_TOKEN
+                    },
+                    body: JSON.stringify({
+                        amount: amount,
+                        bank_code: bankCode,
+                        account_number: accountNumber,
+                        account_name: accountName,
+                        user_id: currentUser?.id || 'guest'
+                    })
+                });
+                const result = await response.json();
+                if (result.success) {
+                    alert(`✅ ${result.message}\nWithdrawal ID: ${result.withdrawal_id}`);
+                    return result.withdrawal_id;
+                } else {
+                    alert('❌ Gagal: ' + result.error);
+                    return null;
+                }
+            } catch (error) {
+                console.error('Withdraw error:', error);
+                alert('❌ Koneksi ke server gagal!');
+                return null;
+            }
+        }
+
+        async function tukarVoucherBackend(voucherType, pointsUsed) {
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/voucher`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': BACKEND_TOKEN
+                    },
+                    body: JSON.stringify({
+                        voucher_type: voucherType,
+                        points_used: pointsUsed,
+                        user_id: currentUser?.id || 'guest'
+                    })
+                });
+                const result = await response.json();
+                if (result.success) {
+                    alert(`✅ Voucher berhasil ditukar!\nKode: ${result.voucher_code}`);
+                    return result.voucher_code;
+                } else {
+                    alert('❌ Gagal: ' + result.error);
+                    return null;
+                }
+            } catch (error) {
+                console.error('Voucher error:', error);
+                alert('❌ Koneksi ke server gagal!');
+                return null;
             }
         }
 
@@ -614,11 +719,6 @@
             updateDateTime();
             setInterval(updateDateTime, 1000);
             setRandomQuote();
-        }
-
-        function setRandomQuote() {
-            const quoteEl = document.getElementById('quoteText');
-            if(quoteEl) quoteEl.innerText = getRandomQuote();
         }
 
         function loadUserData() {
@@ -656,7 +756,7 @@
             pointsElem.innerText = `${globalPoints} Poin`;
             let percent = Math.min(100, (globalPoints / 200) * 100);
             progressFill.style.width = `${percent}%`;
-            if(globalPoints < 50) levelElem.innerText = "🥉 Pelajar Nabung";
+            if(globalPoints < 50) levelElem.innerText = "🥉 Belajar Nabung";
             else if(globalPoints < 150) levelElem.innerText = "🥈 Pejuang Nabung";
             else levelElem.innerText = "🏆 Master Tabungan";
             if(streakElem) streakElem.innerText = streak;
@@ -910,10 +1010,6 @@
             alert(`✅ Rencana "${name}" berhasil ditambahkan! Yuk mulai nabung.`);
         };
 
-        function vibrateLight() {
-            if(window.navigator && window.navigator.vibrate) window.navigator.vibrate(50);
-        }
-
         function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
 
         document.getElementById('loginGoogle').onclick = () => saveUserAndShowDashboard({ id: "g_"+Date.now(), name: "User_"+Math.floor(Math.random()*1000), provider: "Google" });
@@ -945,7 +1041,7 @@
             saveUserData();
             const totalSaldo = getTotalSaldo();
             document.getElementById('totalSaldoDisplay').innerHTML = privacyMode ? '••••••' : `Rp ${totalSaldo.toLocaleString('id-ID')}`;
-            document.getElementById('toggleBalanceBtn').innerHTML = privacyMode ? '🙈' : '👁️';
+            document.getElementById('toggleBalanceBtn').innerHTML = privacyMode ? '👀' : '👁️';
         };
 
         document.getElementById('fabNabungBtn').onclick = () => {
