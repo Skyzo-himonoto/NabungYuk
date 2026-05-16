@@ -7,7 +7,6 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -54,7 +53,11 @@
             border-color: #334155;
             color: #5B6E8C;
         }
-        .social-btn.disabled:hover { transform: none; box-shadow: none; }
+        .social-btn.disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
         .social-buttons { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
         .social-btn {
             display: flex; align-items: center; justify-content: center; gap: 12px;
@@ -65,6 +68,7 @@
         body.dark .social-btn { background: #0F172A; border-color: #334155; color: #F1F5F9; }
         .social-btn:not(.disabled):hover { transform: scale(1.02); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         .socmed-logo { width: 22px; height: 22px; }
+
         .divider { display: flex; align-items: center; gap: 12px; margin: 28px 0 20px; color: #94A3B8; font-size: 13px; }
         .divider-line { flex: 1; height: 1px; background: #E2E8F0; }
         .guest-btn {
@@ -122,7 +126,13 @@
         }
         body.dark .settings-panel-elegant { background: #1E293B; border-color: #334155; }
         .settings-panel-elegant.open { max-height: 2000px; margin-bottom: 20px; padding: 16px; }
-        .setting-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #E9EEF3; }
+        .setting-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #E9EEF3;
+        }
         body.dark .setting-row { border-bottom-color: #334155; }
         .setting-label { font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 10px; }
         .coming-soon-badge {
@@ -178,8 +188,22 @@
         }
         .logout-btn-full:hover { background: #FECACA; transform: scale(0.98); }
 
-        .section-title { font-weight: 600; font-size: 17px; margin: 24px 0 14px; display: flex; justify-content: space-between; align-items: center; }
-        .add-btn { background: none; border: none; color: #F59E0B; font-size: 20px; cursor: pointer; font-weight: 600; }
+        .section-title {
+            font-weight: 600;
+            font-size: 17px;
+            margin: 24px 0 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .add-btn {
+            background: none;
+            border: none;
+            color: #F59E0B;
+            font-size: 20px;
+            cursor: pointer;
+            font-weight: 600;
+        }
         .goal-card {
             background: white;
             border-radius: 20px;
@@ -193,13 +217,50 @@
         .progress-bar { background: #E2E8F0; border-radius: 12px; height: 6px; margin: 10px 0; }
         .progress-fill { background: #FACC15; width: 0%; height: 6px; border-radius: 12px; transition: width 0.3s; }
         .action-buttons { display: flex; gap: 12px; margin-top: 12px; }
-        .btn-outline { background: transparent; border: 1px solid #CBD5E1; padding: 6px 14px; border-radius: 40px; font-size: 12px; cursor: pointer; transition: all 0.2s; }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #CBD5E1;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
         .btn-outline.primary { border-color: #FACC15; background: #FEFCE8; }
         .btn-outline.primary:hover { background: #FACC15; color: #1E293B; }
-        .empty-state { background: linear-gradient(135deg, #FFFBEB, #FEFCE8); border-radius: 20px; padding: 32px 20px; text-align: center; color: #5B6E8C; border: 1px dashed #FACC15; }
-        .inspiration-card { background: white; border-radius: 16px; padding: 12px 16px; margin-top: 12px; display: flex; gap: 12px; align-items: center; justify-content: space-between; }
-        .history-item { background: white; border-radius: 16px; padding: 12px 16px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #E9EEF3; }
-        .history-item.early-withdraw { background: #FEF2F2; color: #B91C1C; text-decoration: line-through; }
+        .empty-state {
+            background: linear-gradient(135deg, #FFFBEB, #FEFCE8);
+            border-radius: 20px;
+            padding: 32px 20px;
+            text-align: center;
+            color: #5B6E8C;
+            border: 1px dashed #FACC15;
+        }
+        .inspiration-card {
+            background: white;
+            border-radius: 16px;
+            padding: 12px 16px;
+            margin-top: 12px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .history-item {
+            background: white;
+            border-radius: 16px;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #E9EEF3;
+        }
+        .history-item.early-withdraw {
+            background: #FEF2F2;
+            color: #B91C1C;
+            text-decoration: line-through;
+        }
 
         .bottom-nav-iphone {
             position: fixed;
@@ -223,24 +284,62 @@
                 right: auto;
             }
         }
-        body.dark .bottom-nav-iphone { background: rgba(15,23,42,0.96); border-color: rgba(255,255,255,0.05); }
-        .nav-scroll-container { overflow-x: auto; scrollbar-width: thin; -webkit-overflow-scrolling: touch; scroll-behavior: smooth; }
-        .nav-scroll-container::-webkit-scrollbar { display: none; }
-        .nav-items-wrapper { display: flex; gap: 8px; padding: 4px 0; justify-content: center; min-width: min-content; }
-        .nav-item-iphone {
-            display: flex; flex-direction: column; align-items: center;
-            background: none; border: none; padding: 8px 16px; border-radius: 40px;
-            font-size: 11px; color: #94A3B8; cursor: pointer; transition: all 0.2s; flex-shrink: 0;
+        body.dark .bottom-nav-iphone {
+            background: rgba(15,23,42,0.96);
+            border-color: rgba(255,255,255,0.05);
         }
-        .nav-item-iphone.active { background: #FACC15; color: #1E293B; font-weight: 600; }
+        .nav-scroll-container {
+            overflow-x: auto;
+            scrollbar-width: thin;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+        }
+        .nav-scroll-container::-webkit-scrollbar { display: none; }
+        .nav-items-wrapper {
+            display: flex;
+            gap: 8px;
+            padding: 4px 0;
+            justify-content: center;
+            min-width: min-content;
+        }
+        .nav-item-iphone {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: none;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-size: 11px;
+            color: #94A3B8;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .nav-item-iphone.active {
+            background: #FACC15;
+            color: #1E293B;
+            font-weight: 600;
+        }
         body.dark .nav-item-iphone.active { background: #FACC15; color: #1E293B; }
         .nav-icon-iphone { font-size: 20px; margin-bottom: 2px; }
+
         .fab-nabung {
-            position: fixed; bottom: 90px; right: 20px; width: 56px; height: 56px;
-            background: linear-gradient(135deg, #FACC15, #F59E0B); border-radius: 28px;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 4px 15px rgba(250,204,21,0.4); cursor: pointer; z-index: 99;
-            transition: all 0.2s; border: none;
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #FACC15, #F59E0B);
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(250,204,21,0.4);
+            cursor: pointer;
+            z-index: 99;
+            transition: all 0.2s;
+            border: none;
         }
         .fab-nabung:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(250,204,21,0.5); }
         .fab-nabung span { font-size: 28px; color: #1E293B; font-weight: 600; }
@@ -262,10 +361,6 @@
             </div>
             <div class="logo-title">NabungYuk</div>
             <div class="tagline">nabung itu asik, masa depan cerah ✨</div>
-           
-            <div class="g-recaptcha" data-sitekey="6Le1XO0sAAAAAKSmg3gA7g4lZwCsW-xn1U22S9It" data-callback="onRecaptchaSuccess" style="display: flex; justify-content: center; margin: 16px 0;"></div>
-            <input type="hidden" id="recaptchaToken" name="recaptchaToken">
-            
             <div class="social-buttons">
                 <button class="social-btn" id="loginGoogle"><img class="socmed-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google"> Google</button>
                 <button class="social-btn" id="loginGithub"><svg class="socmed-logo" viewBox="0 0 24 24" fill="#181717"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.6.113.793-.26.793-.58 0-.287-.01-1.05-.015-2.06-3.338.726-4.043-1.61-4.043-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.73.083-.73 1.205.085 1.84 1.237 1.84 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.775.418-1.305.762-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.123-.3-.535-1.52.117-3.16 0 0 1.008-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.29-1.552 3.297-1.23 3.297-1.23.653 1.64.24 2.86.118 3.16.768.84 1.233 1.91 1.233 3.22 0 4.61-2.804 5.62-5.476 5.92.43.37.823 1.102.823 2.22 0 1.6-.015 2.89-.015 3.28 0 .322.192.696.8.58C20.565 21.795 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg> GitHub</button>
@@ -292,34 +387,97 @@
             </div>
             <button class="settings-icon-elegant" id="settingsToggleBtn">⚙️</button>
         </div>
-        <div class="quote-card" id="dailyQuote"><span>📖</span><span id="quoteText">✨ Nabung dikit-dikit lama-lama jadi bukit</span></div>
+        <div class="quote-card" id="dailyQuote">
+            <span>📖</span>
+            <span id="quoteText" style="font-size:13px; font-style:italic;">✨ Nabung dikit-dikit lama-lama jadi bukit</span>
+        </div>
         <div class="settings-panel-elegant" id="settingsPanel">
             <div class="setting-row"><span class="setting-label">🌙 Mode Gelap</span><input type="checkbox" id="darkModeToggle"></div>
-            <div class="setting-row"><span class="setting-label">🔔 Notifikasi Harian</span><input type="checkbox" id="notifToggle"></div>
-            <div class="setting-row"><span class="setting-label">📤 Ekspor Data</span><button id="exportBtn" style="background:none;">⬇️</button></div>
+            <div class="setting-row"><span class="setting-label">🔔 Notifikasi Harian (20.00)</span><input type="checkbox" id="notifToggle"></div>
+            <div class="setting-row"><span class="setting-label">📤 Ekspor Data CSV</span><button id="exportBtn" style="background:none; cursor:pointer;">⬇️</button></div>
+            <div class="category-accordion"><div class="category-header" onclick="toggleCategory('cat1')"><span>🎮 Gamifikasi & Tantangan</span><span class="category-arrow">▼</span></div>
+            <div class="category-content" id="cat1">
+                <div class="setting-row"><span class="setting-label">🏆 Leaderboard Nasional</span><span class="coming-soon-badge" onclick="showComingSoon('Leaderboard Nasional')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">💎 Challenge 30 Hari</span><span class="coming-soon-badge" onclick="showComingSoon('Challenge 30 Hari')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">🏅 Lencana Pencapaian</span><span class="coming-soon-badge" onclick="showComingSoon('Lencana Pencapaian')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">🎯 Misi Harian & Mingguan</span><span class="coming-soon-badge" onclick="showComingSoon('Misi Harian')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">🎮 Mini Games Dapet Poin</span><span class="coming-soon-badge" onclick="showComingSoon('Mini Games')">Coming Soon</span></div>
+            </div></div>
+            <div class="category-accordion"><div class="category-header" onclick="toggleCategory('cat2')"><span>💰 Tabungan & Investasi</span><span class="category-arrow">▼</span></div>
+            <div class="category-content" id="cat2">
+                <div class="setting-row"><span class="setting-label">🤖 Auto Nabung (Rutin Otomatis)</span><span class="coming-soon-badge" onclick="showComingSoon('Auto Nabung')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">🏦 Tarik Tunai ke Semua Bank</span><span class="coming-soon-badge" onclick="showComingSoon('Tarik Tunai')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">🌍 Multi Mata Uang (USD, SGD, JPY)</span><span class="coming-soon-badge" onclick="showComingSoon('Multi Mata Uang')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">🏦 Bunga Tabungan & Investasi Mini</span><span class="coming-soon-badge" onclick="showComingSoon('Investasi Mini')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">💸 Fitur Split Bill / Bayar Patungan</span><span class="coming-soon-badge" onclick="showComingSoon('Split Bill')">Coming Soon</span></div>
+            </div></div>
+            <div class="category-accordion"><div class="category-header" onclick="toggleCategory('cat3')"><span>🔗 Integrasi & Koneksi</span><span class="category-arrow">▼</span></div>
+            <div class="category-content" id="cat3">
+                <div class="setting-row"><span class="setting-label">💳 Hubungkan E-Wallet (DANA/OVO/GoPay)</span><span class="coming-soon-badge" onclick="showComingSoon('Hubungkan E-Wallet')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">🔄 API Key untuk Developer</span><span class="coming-soon-badge" onclick="showComingSoon('API Key')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">🔄 Sinkronisasi Multi Device</span><span class="coming-soon-badge" onclick="showComingSoon('Sinkronisasi')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">📱 Widget Home Screen</span><span class="coming-soon-badge" onclick="showComingSoon('Widget')">Coming Soon</span></div>
+            </div></div>
+            <div class="category-accordion"><div class="category-header" onclick="toggleCategory('cat4')"><span>🔒 Keamanan & Privasi</span><span class="category-arrow">▼</span></div>
+            <div class="category-content" id="cat4">
+                <div class="setting-row"><span class="setting-label">🔒 Keamanan 2FA (Google Authenticator)</span><span class="coming-soon-badge" onclick="showComingSoon('2FA')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">🔐 Face ID / Fingerprint Login</span><span class="coming-soon-badge" onclick="showComingSoon('Face ID')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">🔒 Mode Privasi Super</span><span class="coming-soon-badge" onclick="showComingSoon('Privasi Super')">Coming Soon</span></div>
+            </div></div>
+            <div class="category-accordion"><div class="category-header" onclick="toggleCategory('cat5')"><span>📊 Laporan & Analitik</span><span class="category-arrow">▼</span></div>
+            <div class="category-content" id="cat5">
+                <div class="setting-row"><span class="setting-label">📄 Laporan Keuangan (PDF/Excel)</span><span class="coming-soon-badge" onclick="showComingSoon('Laporan PDF')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">📊 Grafik & Statistik Interaktif</span><span class="coming-soon-badge" onclick="showComingSoon('Grafik')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">📊 Prediksi Nabung (AI)</span><span class="coming-soon-badge" onclick="showComingSoon('Prediksi AI')">Coming Soon</span></div>
+            </div></div>
+            <div class="category-accordion"><div class="category-header" onclick="toggleCategory('cat6')"><span>🎁 Voucher & Reward</span><span class="category-arrow">▼</span></div>
+            <div class="category-content" id="cat6">
+                <div class="setting-row"><span class="setting-label">🎁 Voucher Center (Tukar Poin)</span><span class="coming-soon-badge" onclick="showComingSoon('Voucher Center')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">🎮 Top Up Game (ML, FF, PUBG)</span><span class="coming-soon-badge" onclick="showComingSoon('Top Up Game')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">🛍️ Voucher Belanja Shopee/Tokped</span><span class="coming-soon-badge" onclick="showComingSoon('Voucher Belanja')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">📱 Voucher Pulsa & Token Listrik</span><span class="coming-soon-badge" onclick="showComingSoon('Voucher Pulsa')">Coming Soon</span></div>
+            </div></div>
+            <div class="category-accordion"><div class="category-header" onclick="toggleCategory('cat7')"><span>🧠 AI & Fitur Cerdas</span><span class="category-arrow">▼</span></div>
+            <div class="category-content" id="cat7">
+                <div class="setting-row"><span class="setting-label">💡 Saran Target Cerdas (AI)</span><span class="coming-soon-badge" onclick="showComingSoon('Saran AI')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">💬 Chatbot AI (Tanya Nabung)</span><span class="coming-soon-badge" onclick="showComingSoon('Chatbot AI')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">🗣️ Voice Command (Nabung Pake Suara)</span><span class="coming-soon-badge" onclick="showComingSoon('Voice Command')">Coming Soon</span></div>
+            </div></div>
+            <div class="category-accordion"><div class="category-header" onclick="toggleCategory('cat8')"><span>🔧 Lainnya (Tools)</span><span class="category-arrow">▼</span></div>
+            <div class="category-content" id="cat8">
+                <div class="setting-row"><span class="setting-label">🎓 Edukasi Finansial & Tips</span><span class="coming-soon-badge" onclick="showComingSoon('Edukasi')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">🎨 Tema Kustom (Ubah Warna)</span><span class="coming-soon-badge" onclick="showComingSoon('Tema Kustom')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">📞 Call Center & Live Chat 24/7</span><span class="coming-soon-badge" onclick="showComingSoon('Live Chat')">Coming Soon</span></div>
+                <div class="setting-row"><span class="setting-label">🌐 Mode Offline (Catat Dulu)</span><span class="coming-soon-badge" onclick="showComingSoon('Mode Offline')">Coming Soon</span></div>
+            </div></div>
             <button class="logout-btn-full" id="logoutBtn">🚪 Keluar / Ganti Akun</button>
         </div>
         <div class="level-card">
             <div class="level-header"><span class="level-badge" id="levelName">Belajar Nabung</span><span class="level-points" id="pointsDisplay">0 Poin</span></div>
             <div class="progress-bar-bg"><div class="progress-fill" id="levelProgress" style="width:0%"></div></div>
-            <div class="streak-row"><span>🔥 <span id="streakCount">0</span> hari</span><span>🎯 <span id="targetCount">0</span> target</span></div>
+            <div class="streak-row">
+                <span>🔥 <span id="streakCount">0</span> hari berturut-turut</span>
+                <span>🎯 <span id="targetCount">0</span> target aktif</span>
+            </div>
         </div>
         <div class="balance-card-elegant">
-            <div class="balance-header"><span class="balance-label">💰 Total Tabungan</span><button class="eye-toggle" id="toggleBalanceBtn">👁️</button></div>
+            <div class="balance-header"><span class="balance-label">💰 Total Tabungan Fisik</span><button class="eye-toggle" id="toggleBalanceBtn">👁️</button></div>
             <div class="balance-amount-large" id="totalSaldoDisplay">Rp 0</div>
-            <div>✨ Terus konsisten, ya!</div>
+            <div style="font-size:12px; opacity:0.6;">✨ Terus konsisten, ya!</div>
         </div>
         <div id="dynamicContent"></div>
         <div class="bottom-nav-iphone" id="bottomNav">
-            <div class="nav-scroll-container"><div class="nav-items-wrapper">
-                <button class="nav-item-iphone active" data-nav="beranda"><span class="nav-icon-iphone">🏠</span><span>Beranda</span></button>
-                <button class="nav-item-iphone" data-nav="target"><span class="nav-icon-iphone">🎯</span><span>Target</span></button>
-                <button class="nav-item-iphone" data-nav="history"><span class="nav-icon-iphone">📜</span><span>Riwayat</span></button>
-                <button class="nav-item-iphone" data-nav="analytics"><span class="nav-icon-iphone">📊</span><span>Analitik</span></button>
-                <button class="nav-item-iphone" data-nav="voucher"><span class="nav-icon-iphone">🎁</span><span>Voucher</span></button>
-                <button class="nav-item-iphone" data-nav="backup"><span class="nav-icon-iphone">💾</span><span>Backup</span></button>
-                <button class="nav-item-iphone" data-nav="settings"><span class="nav-icon-iphone">⚙️</span><span>Settings</span></button>
-            </div></div>
+            <div class="nav-scroll-container">
+                <div class="nav-items-wrapper">
+                    <button class="nav-item-iphone active" data-nav="beranda"><span class="nav-icon-iphone">🏠</span><span>Beranda</span></button>
+                    <button class="nav-item-iphone" data-nav="target"><span class="nav-icon-iphone">🎯</span><span>Target</span></button>
+                    <button class="nav-item-iphone" data-nav="history"><span class="nav-icon-iphone">📜</span><span>Riwayat</span></button>
+                    <button class="nav-item-iphone" data-nav="analytics"><span class="nav-icon-iphone">📊</span><span>Analitik</span></button>
+                    <button class="nav-item-iphone" data-nav="voucher"><span class="nav-icon-iphone">🎁</span><span>Voucher</span></button>
+                    <button class="nav-item-iphone" data-nav="backup"><span class="nav-icon-iphone">💾</span><span>Backup</span></button>
+                    <button class="nav-item-iphone" data-nav="settings"><span class="nav-icon-iphone">⚙️</span><span>Settings</span></button>
+                </div>
+            </div>
         </div>
         <button class="fab-nabung" id="fabNabungBtn"><span>+</span></button>
     </div>
@@ -331,17 +489,38 @@
             projectId: "nabungyuk-af081",
             storageBucket: "nabungyuk-af081.firebasestorage.app",
             messagingSenderId: "253119817538",
-            appId: "1:253119817538:web:1fd4a2970a42bef85ecadb"
+            appId: "1:253119817538:web:1fd4a2970a42bef85ecadb",
+            measurementId: "G-SV0D9LN8EQ"
         };
+
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
 
-        const BACKEND_URL = 'http://192.168.18.2:3000';
-        const BACKEND_TOKEN = 'N4B0ngYuk10?19372';
+        const quotes = [
+            "💰 Nabung dikit-dikit lama-lama jadi bukit!",
+            "✨ Masa depan cerah dimulai dari hari ini!",
+            "🎯 Konsistensi lebih penting dari jumlah!",
+            "💪 Kamu bisa! Setor kecil konsisten > besar tapi putus asa.",
+            "🏆 Jangan bandingkan tabunganmu dengan orang lain!",
+            "📈 Mulai dari nominal kecil, yang penting konsisten!",
+            "🚀 jadilah seperti roket, semakin tinggi semakin dekat Tujuannya",
+            "🕐 waktu terus berjalan, tapi kamu harus tetap nabung",
+            "🌍 panggil saja aku bumi, hanya aku yang bikin kamu senang",
+        ];
 
-        const quotes = ["💰 Nabung dikit-dikit lama-lama jadi bukit!", "✨ Masa depan cerah dimulai dari hari ini!", "🎯 Konsistensi lebih penting dari jumlah!", "💪 Kamu bisa! Setor kecil konsisten > besar tapi putus asa.", "🏆 Jangan bandingkan tabunganmu dengan orang lain!", "📈 Mulai dari nominal kecil, yang penting konsisten!", "🚀 jadilah seperti roket, semakin tinggi semakin dekat Tujuannya"];
         function getRandomQuote() { return quotes[Math.floor(Math.random() * quotes.length)]; }
-        function setRandomQuote() { const q = document.getElementById('quoteText'); if(q) q.innerText = getRandomQuote(); }
+        function setRandomQuote() { const quoteEl = document.getElementById('quoteText'); if(quoteEl) quoteEl.innerText = getRandomQuote(); }
+
+        function showComingSoon(message) {
+            Swal.fire({ icon: 'info', title: 'Coming Soon', text: message, toast: true, position: 'top-end', showConfirmButton: false, timer: 2000, timerProgressBar: true });
+        }
+
+        function toggleCategory(catId) {
+            const content = document.getElementById(catId);
+            const arrow = content?.parentElement?.querySelector('.category-arrow');
+            if (content.classList.contains('open')) { content.classList.remove('open'); if (arrow) arrow.innerHTML = '▼'; } 
+            else { content.classList.add('open'); if (arrow) arrow.innerHTML = '▲'; }
+        }
 
         let currentUser = null, currentNav = "beranda", settingsOpen = false, goals = [], globalPoints = 0, globalHistory = [], privacyMode = false, streak = 0, lastDepositDate = null;
 
@@ -358,29 +537,33 @@
         }
 
         function loadUserData() {
-            if(!currentUser) return;
+            if (!currentUser) return;
             const raw = localStorage.getItem(`nabungyuk_data_${currentUser.id}`);
-            if(raw) { try { const d = JSON.parse(raw); goals = d.goals || []; globalPoints = d.globalPoints || 0; globalHistory = d.globalHistory || []; privacyMode = d.privacyMode || false; streak = d.streak || 0; lastDepositDate = d.lastDepositDate || null; } catch(e){} }
-            if(goals.length === 0) goals = [];
+            if (raw) { try { const d = JSON.parse(raw); goals = d.goals || []; globalPoints = d.globalPoints || 0; globalHistory = d.globalHistory || []; privacyMode = d.privacyMode || false; streak = d.streak || 0; lastDepositDate = d.lastDepositDate || null; } catch(e) {} }
+            if (goals.length === 0) goals = [];
             updatePointsAndLevel();
         }
 
         function saveUserData() {
-            if(!currentUser) return;
+            if (!currentUser) return;
             localStorage.setItem(`nabungyuk_data_${currentUser.id}`, JSON.stringify({ goals, globalPoints, globalHistory, privacyMode, streak, lastDepositDate }));
         }
 
-        function getTotalSaldo() { return goals.reduce((s,g) => s + (g.currentAmount||0), 0); }
+        function getTotalSaldo() { return goals.reduce((sum, g) => sum + (g.currentAmount || 0), 0); }
 
         function updatePointsAndLevel() {
+            const levelElem = document.getElementById('levelName');
             const pointsElem = document.getElementById('pointsDisplay');
             const progressFill = document.getElementById('levelProgress');
             const streakElem = document.getElementById('streakCount');
             const targetCountElem = document.getElementById('targetCount');
-            if(!pointsElem) return;
+            if(!levelElem) return;
             pointsElem.innerText = `${globalPoints} Poin`;
-            let percent = Math.min(100, (globalPoints/200)*100);
+            let percent = Math.min(100, (globalPoints / 200) * 100);
             progressFill.style.width = `${percent}%`;
+            if(globalPoints < 50) levelElem.innerText = "🥉 Belajar Nabung";
+            else if(globalPoints < 150) levelElem.innerText = "🥈 Pejuang Nabung";
+            else levelElem.innerText = "🏆 Master Tabungan";
             if(streakElem) streakElem.innerText = streak;
             if(targetCountElem) targetCountElem.innerText = goals.filter(g => g.currentAmount < g.targetAmount).length;
         }
@@ -388,26 +571,28 @@
         function updateStreak() {
             const today = new Date().toDateString();
             if(lastDepositDate !== today) {
-                if(lastDepositDate) { const yesterday = new Date(); yesterday.setDate(yesterday.getDate()-1); if(lastDepositDate === yesterday.toDateString()) streak++; else streak=1; } else streak=1;
+                if(lastDepositDate) { const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1); if(lastDepositDate === yesterday.toDateString()) streak++; else streak = 1; } 
+                else streak = 1;
                 lastDepositDate = today;
             }
         }
 
         function updateDateTime() {
             const now = new Date();
-            const hari = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
-            const bulan = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
-            const dateElem = document.getElementById('dateTimeDisplay');
+            const hari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+            const bulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+            const dateString = `${hari[now.getDay()]}, ${now.getDate()} ${bulan[now.getMonth()]} ${now.getFullYear()}`;
+            const timeString = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+            const dateTimeElem = document.getElementById('dateTimeDisplay');
             const clockElem = document.getElementById('realTimeClock');
             const greetingElem = document.getElementById('greetingName');
-            if(dateElem) dateElem.innerText = `${hari[now.getDay()]}, ${now.getDate()} ${bulan[now.getMonth()]} ${now.getFullYear()}`;
-            if(clockElem) clockElem.innerText = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
-            if(greetingElem && currentUser) greetingElem.innerText = `Halo ${currentUser.name || 'Sahabat Nabung'} 👋`;
+            if (dateTimeElem) dateTimeElem.innerText = dateString;
+            if (clockElem) clockElem.innerText = timeString;
+            if (greetingElem && currentUser) greetingElem.innerText = `Halo ${currentUser.name || 'Sahabat Nabung'}! 👋`;
         }
 
         function renderDashboard() {
-            updateDateTime();
-            updatePointsAndLevel();
+            updateDateTime(); updatePointsAndLevel();
             const totalSaldo = getTotalSaldo();
             const saldoElem = document.getElementById('totalSaldoDisplay');
             if(privacyMode) saldoElem.innerHTML = '••••••';
@@ -416,104 +601,164 @@
         }
 
         function renderDynamicContent() {
-            const div = document.getElementById('dynamicContent');
-            if(!div) return;
-            if(currentNav === 'beranda') div.innerHTML = `<div class="section-title"><span>🎯 Rencana Tabungan</span><button class="add-btn" id="addGoalHome">+ Tambah</button></div>${goals.length===0 ? '<div class="empty-state">✨ Belum ada rencana. Klik + Tambah!</div>' : goals.map(g => { const percent = (g.currentAmount/g.targetAmount)*100; return `<div class="goal-card"><strong>${escapeHtml(g.name)}</strong> ${percent>=100?'✅':''}<div class="progress-bar"><div class="progress-fill" style="width:${Math.min(100,percent)}%"></div></div><div>Rp ${g.currentAmount.toLocaleString('id-ID')} / Rp ${g.targetAmount.toLocaleString('id-ID')}</div><div class="action-buttons"><button class="btn-outline primary setorGoal" data-id="${g.id}">Setor</button><button class="btn-outline tarikGoal" data-id="${g.id}">Tarik</button></div></div>`; }).join('')}`;
-            else if(currentNav === 'target') div.innerHTML = `<div class="section-title"><span>🎯 Semua Rencana</span><button class="add-btn" id="addTargetPage">+ Tambah</button></div>${goals.length===0 ? '<div class="empty-state">✨ Belum ada rencana</div>' : goals.map(g => { const percent = (g.currentAmount/g.targetAmount)*100; return `<div class="goal-card"><strong>${escapeHtml(g.name)}</strong><div class="progress-bar"><div class="progress-fill" style="width:${Math.min(100,percent)}%"></div></div><div>Rp ${g.currentAmount.toLocaleString('id-ID')} / Rp ${g.targetAmount.toLocaleString('id-ID')}</div><div class="action-buttons"><button class="btn-outline primary setorGoal" data-id="${g.id}">Setor</button><button class="btn-outline tarikGoal" data-id="${g.id}">Tarik</button></div></div>`; }).join('')}`;
-            else if(currentNav === 'history') div.innerHTML = `<div class="section-title">📜 History of Regret</div>${globalHistory.length===0 ? '<div class="empty-state">Belum ada riwayat</div>' : globalHistory.slice().reverse().map(h => `<div class="history-item ${h.isEarlyWithdraw ? 'early-withdraw' : ''}">${h.isEarlyWithdraw ? '❌' : '➕'} Rp ${h.amount.toLocaleString('id-ID')} - ${escapeHtml(h.goalName)}<br><small>${new Date(h.timestamp).toLocaleDateString()}</small></div>`).join('')}`;
-            else if(currentNav === 'analytics') div.innerHTML = `<div class="section-title">📊 Statistik</div><div class="goal-card">💰 Total Tabungan: Rp ${getTotalSaldo().toLocaleString('id-ID')}</div><div class="goal-card">🎯 Total Target: Rp ${goals.reduce((s,g)=>s+g.targetAmount,0).toLocaleString('id-ID')}</div><div class="goal-card">⭐ Poin: ${globalPoints}</div><div class="goal-card">🔥 Streak: ${streak} hari</div>`;
-            else if(currentNav === 'voucher') div.innerHTML = `<div class="section-title">🎁 Voucher Center</div><div class="empty-state">⭐ Poin: ${globalPoints}<br>Fitur tukar voucher segera hadir!</div>`;
-            else if(currentNav === 'backup') div.innerHTML = `<div class="section-title">💾 Backup & Restore</div><button id="backupNowBtn" class="btn-outline primary">Backup Data</button><input type="file" id="restoreFile" style="display:none;"><button id="restoreNowBtn" class="btn-outline primary" style="margin-top:10px;">Restore Data</button>`;
-            
-            attachGoalEvents();
-            if(document.getElementById('addGoalHome')) document.getElementById('addGoalHome').onclick = buatTargetBaru;
-            if(document.getElementById('addTargetPage')) document.getElementById('addTargetPage').onclick = buatTargetBaru;
-            if(document.getElementById('backupNowBtn')) document.getElementById('backupNowBtn').onclick = () => { const data = JSON.stringify({ goals, globalPoints, globalHistory, streak, lastDepositDate }); const blob = new Blob([data]); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `nabungyuk_backup_${Date.now()}.json`; a.click(); Swal.fire({ icon:'success', title:'Backup Berhasil!', toast:true, timer:1500 }); };
-            if(document.getElementById('restoreNowBtn')) document.getElementById('restoreNowBtn').onclick = () => document.getElementById('restoreFile').click();
-            if(document.getElementById('restoreFile')) document.getElementById('restoreFile').onchange = (e) => { const file = e.target.files[0]; if(file) { const reader = new FileReader(); reader.onload = ev => { try { const data = JSON.parse(ev.target.result); goals = data.goals || []; globalPoints = data.globalPoints || 0; globalHistory = data.globalHistory || []; streak = data.streak || 0; lastDepositDate = data.lastDepositDate || null; saveUserData(); renderDashboard(); Swal.fire({ icon:'success', title:'Restore Berhasil!', toast:true, timer:1500 }); } catch(err) { Swal.fire({ icon:'error', title:'File Tidak Valid!', toast:true, timer:1500 }); } }; reader.readAsText(file); } };
+            const contentDiv = document.getElementById('dynamicContent');
+            if (!contentDiv) return;
+            if (currentNav === 'beranda') renderBeranda(contentDiv);
+            else if (currentNav === 'target') renderTargetPage(contentDiv);
+            else if (currentNav === 'history') renderHistoryPage(contentDiv);
+            else if (currentNav === 'analytics') renderAnalyticsPage(contentDiv);
+            else if (currentNav === 'voucher') renderVoucherPage(contentDiv);
+            else if (currentNav === 'backup') renderBackupPage(contentDiv);
+            else if (currentNav === 'settings') { document.getElementById('settingsToggleBtn').click(); currentNav = 'beranda'; renderBeranda(contentDiv); }
+            const saldoElem = document.getElementById('totalSaldoDisplay');
+            if(privacyMode && saldoElem) saldoElem.innerHTML = '••••••';
+            else if(saldoElem) saldoElem.innerHTML = `Rp ${getTotalSaldo().toLocaleString('id-ID')}`;
         }
 
-        function attachGoalEvents() {
-            document.querySelectorAll('.setorGoal').forEach(btn => btn.onclick = () => transactionPrompt(parseInt(btn.dataset.id), 'deposit'));
-            document.querySelectorAll('.tarikGoal').forEach(btn => btn.onclick = () => transactionPrompt(parseInt(btn.dataset.id), 'withdraw'));
+        function renderBeranda(container) {
+            let html = `<div class="section-title"><span>🎯 Rencana Tabungan</span><button class="add-btn" id="addGoalHome">+ Tambah</button></div>`;
+            if (goals.length === 0) {
+                html += `<div class="empty-state">✨ Belum ada rencana tabungan<br><br><strong>💡 Ide untuk kamu:</strong>
+                    <div class="inspiration-card"><span style="font-size:24px;">💻</span><div><strong>Beli Laptop Baru</strong><br>Target: Rp 5.000.000</div><button class="btn-outline primary" onclick="copyExampleGoal('Beli Laptop Baru', 5000000)">+ Gunakan</button></div>
+                    <div class="inspiration-card"><span style="font-size:24px;">✈️</span><div><strong>Liburan Akhir Tahun</strong><br>Target: Rp 3.000.000</div><button class="btn-outline primary" onclick="copyExampleGoal('Liburan Akhir Tahun', 3000000)">+ Gunakan</button></div>
+                    <div class="inspiration-card"><span style="font-size:24px;">🏠</span><div><strong>Dana Darurat</strong><br>Target: Rp 10.000.000</div><button class="btn-outline primary" onclick="copyExampleGoal('Dana Darurat', 10000000)">+ Gunakan</button></div></div>`;
+            } else {
+                goals.forEach(g => { const percent = (g.currentAmount / g.targetAmount) * 100;
+                html += `<div class="goal-card"><div style="display:flex; justify-content:space-between;"><strong>${escapeHtml(g.name)}</strong>${percent >= 100 ? '<span style="color:#10B981;">✅ Lunas</span>' : '<span style="color:#F59E0B;">⏳</span>'}</div>
+                <div class="progress-bar"><div class="progress-fill" style="width:${Math.min(100, percent)}%"></div></div>
+                <div style="display:flex; justify-content:space-between; font-size:13px;"><span>Rp ${g.currentAmount.toLocaleString('id-ID')}</span><span>Rp ${g.targetAmount.toLocaleString('id-ID')}</span></div>
+                <div class="action-buttons"><button class="btn-outline primary setorGoal" data-id="${g.id}">➕ Setor</button><button class="btn-outline tarikGoal" data-id="${g.id}">💸 Tarik</button></div></div>`; });
+            }
+            container.innerHTML = html;
+            document.getElementById('addGoalHome')?.addEventListener('click', buatTargetBaru);
+            attachGoalEvents();
         }
+
+        function renderTargetPage(container) {
+            let html = `<div class="section-title"><span>🎯 Semua Rencana</span><button class="add-btn" id="addTargetPage">+ Tambah</button></div>`;
+            if (goals.length === 0) html += `<div class="empty-state">✨ Belum ada rencana. Yuk buat target pertama!</div>`;
+            else { goals.forEach(g => { const percent = (g.currentAmount / g.targetAmount) * 100;
+                html += `<div class="goal-card"><strong>${escapeHtml(g.name)}</strong><div class="progress-bar"><div class="progress-fill" style="width:${Math.min(100, percent)}%"></div></div>
+                <div style="font-size:13px;">Rp ${g.currentAmount.toLocaleString('id-ID')} / Rp ${g.targetAmount.toLocaleString('id-ID')}</div>
+                <div class="action-buttons"><button class="btn-outline primary setorGoal" data-id="${g.id}">Setor</button><button class="btn-outline tarikGoal" data-id="${g.id}">Tarik</button></div></div>`; });
+            }
+            container.innerHTML = html;
+            document.getElementById('addTargetPage')?.addEventListener('click', buatTargetBaru);
+            attachGoalEvents();
+        }
+
+        function renderHistoryPage(container) {
+            if (!globalHistory.length) { container.innerHTML = `<div class="empty-state">📭 Belum ada riwayat transaksi<br><br>Mulai setor tabunganmu!</div>`; return; }
+            let html = `<div class="section-title">📜 History of Regret</div><p style="font-size:12px; color:#94A3B8; margin-bottom:12px;">❌ Yang dicoret = penarikan sebelum target tercapai</p>`;
+            globalHistory.slice().reverse().forEach(h => {
+                const isEarly = h.isEarlyWithdraw === true;
+                const earlyClass = isEarly ? 'early-withdraw' : '';
+                const emoji = isEarly ? '❌' : '➕';
+                let amountDisplay = privacyMode ? '••••••' : `Rp ${h.amount.toLocaleString('id-ID')}`;
+                let moodDisplay = h.mood ? ` ${h.mood}` : '';
+                html += `<div class="history-item ${earlyClass}"><div><strong>${emoji} ${amountDisplay}</strong><br><span style="font-size:11px;">${escapeHtml(h.goalName)}${moodDisplay}</span></div><div style="font-size:12px;">${new Date(h.timestamp).toLocaleDateString('id-ID')}</div></div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function renderAnalyticsPage(container) {
+            const totalSaldo = getTotalSaldo();
+            const totalTarget = goals.reduce((sum, g) => sum + g.targetAmount, 0);
+            const progressPercent = totalTarget > 0 ? (totalSaldo / totalTarget * 100).toFixed(0) : 0;
+            const bulanNames = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
+            let monthlyData = [0,0,0,0,0,0,0,0,0,0,0,0];
+            globalHistory.filter(h => h.type === 'deposit').forEach(h => { let month = new Date(h.timestamp).getMonth(); monthlyData[month] += h.amount; });
+            let maxValue = Math.max(...monthlyData, 1);
+            let bars = '';
+            for(let i = 0; i < 12; i++) { let height = (monthlyData[i] / maxValue) * 100;
+                bars += `<div style="flex:1; text-align:center;"><div style="background:#FACC15; height:${Math.max(height, 4)}px; width:100%; border-radius:8px; min-height:4px;"></div><div style="font-size:10px; margin-top:6px;">${bulanNames[i]}</div><div style="font-size:9px; color:#5B6E8C;">${monthlyData[i] > 0 ? (monthlyData[i]/1000).toFixed(0) + 'k' : '-'}</div></div>`;
+            }
+            container.innerHTML = `<div class="section-title">📊 Statistik Nabung</div>
+                <div class="goal-card"><strong>💰 Total Tabungan</strong><br>Rp ${totalSaldo.toLocaleString('id-ID')}</div>
+                <div class="goal-card"><strong>🎯 Total Target</strong><br>Rp ${totalTarget.toLocaleString('id-ID')}</div>
+                <div class="goal-card"><strong>📈 Progress Keseluruhan</strong><br><div class="progress-bar"><div class="progress-fill" style="width:${progressPercent}%"></div></div>${progressPercent}%</div>
+                <div class="goal-card"><strong>📊 Grafik Setoran per Bulan</strong><br><div style="display:flex; gap:6px; align-items:flex-end; height:100px; margin-top:12px;">${bars}</div></div>
+                <div class="goal-card"><strong>⭐ Poin Terkumpul</strong><br>${globalPoints} Poin</div>
+                <div class="goal-card"><strong>🔥 Streak Nabung</strong><br>${streak} hari berturut-turut</div>`;
+        }
+
+        function renderVoucherPage(container) {
+            let voucherList = [{ id: 1, name: "Voucher Pulsa 10K", icon: "📱", cost: 100 }, { id: 2, name: "Voucher Shopee 25K", icon: "🛍️", cost: 250 }, { id: 3, name: "Token Listrik 50K", icon: "⚡", cost: 500 }, { id: 4, name: "Top Up ML 100 DM", icon: "🎮", cost: 750 }, { id: 5, name: "Voucher GoFood 15K", icon: "🍔", cost: 150 }];
+            let voucherHtml = '';
+            voucherList.forEach(v => { let isAvailable = globalPoints >= v.cost;
+                voucherHtml += `<div class="inspiration-card" style="flex-direction:column; align-items:stretch; gap:10px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;"><div><span style="font-size:24px;">${v.icon}</span> <strong>${v.name}</strong></div><div><span style="font-weight:700;">${v.cost} poin</span></div></div>
+                    <button class="btn-outline primary voucher-tukar" data-cost="${v.cost}" data-name="${v.name}" ${!isAvailable ? 'disabled style="opacity:0.5;"' : ''}>${isAvailable ? '🎁 Tukar Sekarang' : '🔒 Poin Kurang'}</button>
+                </div>`;
+            });
+            container.innerHTML = `<div class="section-title">🎁 Voucher Center</div>
+                <div class="empty-state" style="margin-bottom:12px;"><strong>⭐ Poin Kamu: ${globalPoints}</strong><br><span style="font-size:12px;">Tukarkan poinmu dengan voucher menarik di bawah ini!</span></div>
+                <div style="display:flex; flex-direction:column; gap:12px;">${voucherHtml}</div>
+                <div class="empty-state" style="margin-top:16px;">✨ Voucher akan dikirim via email setelah tukar!</div>`;
+            document.querySelectorAll('.voucher-tukar').forEach(btn => { btn.addEventListener('click', () => { let cost = parseInt(btn.dataset.cost), name = btn.dataset.name;
+                if(globalPoints >= cost) { globalPoints -= cost; saveUserData(); renderDashboard(); Swal.fire({ icon: 'success', title: 'Voucher Ditukar!', text: `${name}\nKode: NBYK-${Math.random().toString(36).substring(2, 10).toUpperCase()}`, toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true }); } 
+                else { Swal.fire({ icon: 'error', title: 'Poin Tidak Cukup!', text: `Butuh ${cost} poin, kamu punya ${globalPoints} poin.`, toast: true, position: 'top-end', showConfirmButton: false, timer: 2000, timerProgressBar: true }); } }); });
+        }
+
+        function renderBackupPage(container) {
+            container.innerHTML = `<div class="section-title">💾 Backup & Restore</div>
+                <div class="goal-card"><div class="setting-row"><span>📤 Backup Data ke File</span><button id="backupNowBtn" class="btn-outline primary">Backup</button></div>
+                <div class="setting-row"><span>📥 Restore dari File</span><button id="restoreNowBtn" class="btn-outline primary">Restore</button><input type="file" id="restoreFile" style="display:none;"></div></div>
+                <div class="empty-state">⚠️ Simpan data tabunganmu secara berkala agar tidak hilang.</div>`;
+            document.getElementById('backupNowBtn')?.addEventListener('click', () => { const dataStr = JSON.stringify({ goals, globalPoints, globalHistory, streak, lastDepositDate }, null, 2); const blob = new Blob([dataStr], {type: 'application/json'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `nabungyuk_backup_${Date.now()}.json`; a.click(); URL.revokeObjectURL(url); Swal.fire({ icon: 'success', title: 'Backup Berhasil!', text: 'Data tabunganmu telah disimpan.', toast: true, position: 'top-end', showConfirmButton: false, timer: 2000, timerProgressBar: true }); });
+            document.getElementById('restoreNowBtn')?.addEventListener('click', () => document.getElementById('restoreFile').click());
+            document.getElementById('restoreFile')?.addEventListener('change', (e) => { const file = e.target.files[0]; if(file) { const reader = new FileReader(); reader.onload = (ev) => { try { const data = JSON.parse(ev.target.result); goals = data.goals || []; globalPoints = data.globalPoints || 0; globalHistory = data.globalHistory || []; streak = data.streak || 0; lastDepositDate = data.lastDepositDate || null; saveUserData(); renderDashboard(); Swal.fire({ icon: 'success', title: 'Restore Berhasil!', text: 'Data tabunganmu telah dipulihkan.', toast: true, position: 'top-end', showConfirmButton: false, timer: 2000, timerProgressBar: true }); } catch(err) { Swal.fire({ icon: 'error', title: 'File Tidak Valid!', text: 'Pastikan file adalah backup dari NabungYuk.', toast: true, position: 'top-end', showConfirmButton: false, timer: 2000, timerProgressBar: true }); } }; reader.readAsText(file); } });
+        }
+
+        function attachGoalEvents() { document.querySelectorAll('.setorGoal').forEach(btn => btn.addEventListener('click', () => transactionPrompt(parseInt(btn.dataset.id), 'deposit'))); document.querySelectorAll('.tarikGoal').forEach(btn => btn.addEventListener('click', () => transactionPrompt(parseInt(btn.dataset.id), 'withdraw'))); }
 
         function transactionPrompt(goalId, type) {
-            const goal = goals.find(g=>g.id===goalId);
-            if(!goal) return;
-            const amount = parseInt(prompt(`${type==='deposit'?'Setor ke':'Tarik dari'} "${goal.name}"\nNominal (Rp):`, type==='deposit'?'50000':'20000'));
-            if(isNaN(amount)) return;
-            if(type==='withdraw' && goal.currentAmount < amount) { Swal.fire({ icon:'error', title:'Saldo Tidak Cukup!', toast:true, timer:1500 }); return; }
-            if(type==='deposit') {
-                let mood = prompt("Perasaanmu hari ini? (😊 Senang / 😐 Biasa / 😢 Terpaksa / 🔥 Semangat)");
-                goal.currentAmount += amount;
-                globalHistory.push({ id:Date.now(), type:'deposit', amount, goalId:goal.id, goalName:goal.name, timestamp:new Date().toISOString(), isEarlyWithdraw:false, mood:mood||'😊' });
-                globalPoints += 2;
-                updateStreak();
-            } else {
-                const wasReached = goal.currentAmount >= goal.targetAmount;
-                goal.currentAmount -= amount;
-                globalHistory.push({ id:Date.now(), type:'withdraw', amount, goalId:goal.id, goalName:goal.name, timestamp:new Date().toISOString(), isEarlyWithdraw:!wasReached });
-                if(!wasReached) Swal.fire({ icon:'warning', title:'Penarikan Dini!', text:'Transaksi akan dicoret merah!', toast:true, timer:2000 });
-            }
-            saveUserData();
-            renderDashboard();
+            const goal = goals.find(g => g.id === goalId);
+            if (!goal) return;
+            const amount = parseInt(prompt(`${type === 'deposit' ? 'Setor ke' : 'Tarik dari'} "${goal.name}"\nMasukkan nominal (Rp):`, type === 'deposit' ? '50000' : '20000'));
+            if (isNaN(amount)) return;
+            if (type === 'withdraw' && goal.currentAmount < amount) { Swal.fire({ icon: 'error', title: 'Saldo Tidak Cukup!', text: `Saldo target "${goal.name}" hanya Rp ${goal.currentAmount.toLocaleString('id-ID')}`, toast: true, position: 'top-end', showConfirmButton: false, timer: 2000, timerProgressBar: true }); return; }
+            if (type === 'deposit') { let mood = prompt("Bagaimana perasaanmu saat nabung hari ini?\n(😊 Senang / 😐 Biasa / 😢 Terpaksa / 🔥 Semangat)"); goal.currentAmount += amount; globalHistory.push({ id: Date.now(), type: 'deposit', amount, goalId: goal.id, goalName: goal.name, timestamp: new Date().toISOString(), isEarlyWithdraw: false, mood: mood || '😊' }); globalPoints += 2; updateStreak(); Swal.fire({ icon: 'success', title: 'Setor Berhasil!', text: `Rp ${amount.toLocaleString('id-ID')} berhasil disetor ke "${goal.name}"`, toast: true, position: 'top-end', showConfirmButton: false, timer: 2000, timerProgressBar: true }); }
+            else { const wasReached = goal.currentAmount >= goal.targetAmount; goal.currentAmount -= amount; globalHistory.push({ id: Date.now(), type: 'withdraw', amount, goalId: goal.id, goalName: goal.name, timestamp: new Date().toISOString(), isEarlyWithdraw: !wasReached }); if (!wasReached) { Swal.fire({ icon: 'warning', title: 'Penarikan Dini!', text: `⚠️ Penarikan Rp ${amount.toLocaleString('id-ID')} DICORET MERAH karena target "${goal.name}" belum tercapai!`, toast: true, position: 'top-end', showConfirmButton: false, timer: 2500, timerProgressBar: true }); } else { Swal.fire({ icon: 'success', title: 'Tarik Berhasil!', text: `Rp ${amount.toLocaleString('id-ID')} berhasil ditarik dari "${goal.name}"`, toast: true, position: 'top-end', showConfirmButton: false, timer: 2000, timerProgressBar: true }); } }
+            saveUserData(); renderDashboard();
         }
 
-        function buatTargetBaru() {
-            let name = prompt("Nama rencana tabungan?");
-            if(!name) return;
-            let target = prompt("Target nominal (Rp):");
-            if(!target || isNaN(parseInt(target))) return;
-            goals.push({ id:Date.now(), name:name.trim(), targetAmount:parseInt(target), currentAmount:0 });
-            saveUserData();
-            renderDashboard();
-        }
+        function buatTargetBaru() { let name = prompt("Apa rencana tabunganmu?\nContoh: Beli Laptop, Liburan, atau Dana Darurat"); if (!name || name.trim() === "") return; let targetInput = prompt(`Berapa target nominal untuk "${name}"?\nContoh: 1000000`); if (!targetInput || isNaN(parseInt(targetInput))) return; goals.push({ id: Date.now(), name: name.trim().substring(0, 40), targetAmount: parseInt(targetInput), currentAmount: 0 }); saveUserData(); renderDashboard(); Swal.fire({ icon: 'success', title: 'Target Dibuat!', text: `Rencana "${name}" berhasil dibuat! Mulai nabung sekarang.`, toast: true, position: 'top-end', showConfirmButton: false, timer: 2000, timerProgressBar: true }); }
 
-        function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+        window.copyExampleGoal = function(name, target) { goals.push({ id: Date.now(), name: name, targetAmount: target, currentAmount: 0 }); saveUserData(); renderDashboard(); Swal.fire({ icon: 'success', title: 'Target Ditambahkan!', text: `Rencana "${name}" berhasil ditambahkan! Yuk mulai nabung.`, toast: true, position: 'top-end', showConfirmButton: false, timer: 2000, timerProgressBar: true }); };
 
-        window.onRecaptchaSuccess = function(token) {
-            document.getElementById('recaptchaToken').value = token;
-        };
+        function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
 
-        async function verifyRecaptcha() {
-            const token = document.getElementById('recaptchaToken').value;
-            if(!token) { Swal.fire({ icon:'warning', title:'reCAPTCHA', text:'Centang "Saya bukan robot" dulu!', toast:true, timer:2000 }); return false; }
-            try {
-                const res = await fetch(`${BACKEND_URL}/api/verify-recaptcha`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ token }) });
-                const result = await res.json();
-                if(result.success) return true;
-                Swal.fire({ icon:'error', title:'reCAPTCHA Gagal', toast:true, timer:2000 });
-                return false;
-            } catch(e) { Swal.fire({ icon:'error', title:'Error', text:'Gagal konek ke server', toast:true, timer:2000 }); return false; }
-        }
-
-        document.getElementById('loginGoogle').onclick = async () => {
-            if(!await verifyRecaptcha()) return;
+        document.getElementById('loginGoogle').onclick = () => {
             const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider).then(r => saveUserAndShowDashboard({ id:r.user.uid, name:r.user.displayName, email:r.user.email, provider:"Google" })).catch(e => Swal.fire({ icon:'error', title:'Login Gagal', text:e.message }));
+            auth.signInWithPopup(provider).then((result) => {
+                const user = result.user;
+                saveUserAndShowDashboard({ id: user.uid, name: user.displayName, email: user.email, provider: "Google" });
+            }).catch((error) => { Swal.fire({ icon: 'error', title: 'Login Gagal', text: error.message, toast: true, position: 'top-end', showConfirmButton: false, timer: 3000 }); });
         };
-        document.getElementById('loginGithub').onclick = async () => {
-            if(!await verifyRecaptcha()) return;
-            const provider = new firebase.auth.GithubAuthProvider();
-            auth.signInWithPopup(provider).then(r => saveUserAndShowDashboard({ id:r.user.uid, name:r.user.displayName, email:r.user.email, provider:"GitHub" })).catch(e => Swal.fire({ icon:'error', title:'Login Gagal', text:e.message }));
-        };
-        document.getElementById('loginGuest').onclick = async () => {
-            if(!await verifyRecaptcha()) return;
-            saveUserAndShowDashboard({ id:"guest_"+Date.now(), name:"Tamu_"+Math.floor(Math.random()*10000), provider:"Guest" });
-        };
-        document.querySelectorAll('.social-btn.disabled').forEach(btn => btn.onclick = () => Swal.fire({ icon:'info', title:'Coming Soon', text:'Fitur ini akan segera hadir!' }));
 
-        document.getElementById('settingsToggleBtn').onclick = () => { const p = document.getElementById('settingsPanel'); settingsOpen = !settingsOpen; settingsOpen ? p.classList.add('open') : p.classList.remove('open'); };
-        document.getElementById('darkModeToggle').onchange = e => e.target.checked ? document.body.classList.add('dark') : document.body.classList.remove('dark');
-        document.getElementById('exportBtn').onclick = () => { const data = JSON.stringify({ goals, globalPoints, globalHistory, streak, lastDepositDate }); const blob = new Blob([data]); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `nabungyuk_data_${Date.now()}.json`; a.click(); Swal.fire({ icon:'success', title:'Ekspor Berhasil!', toast:true, timer:1500 }); };
+        document.getElementById('loginGithub').onclick = () => {
+            const provider = new firebase.auth.GithubAuthProvider();
+            auth.signInWithPopup(provider).then((result) => {
+                const user = result.user;
+                saveUserAndShowDashboard({ id: user.uid, name: user.displayName, email: user.email, provider: "GitHub" });
+            }).catch((error) => { Swal.fire({ icon: 'error', title: 'Login Gagal', text: error.message, toast: true, position: 'top-end', showConfirmButton: false, timer: 3000 }); });
+        };
+
+        document.querySelectorAll('.social-btn.disabled').forEach(btn => { btn.addEventListener('click', () => { showComingSoon('Fitur ini akan segera hadir'); }); });
+
+        document.getElementById('loginGuest').onclick = () => saveUserAndShowDashboard({ id: "guest_"+Date.now(), name: "Tamu_"+Math.floor(Math.random()*10000), provider: "Guest" });
+
+        document.getElementById('settingsToggleBtn').onclick = () => { const panel = document.getElementById('settingsPanel'); settingsOpen = !settingsOpen; settingsOpen ? panel.classList.add('open') : panel.classList.remove('open'); };
+        document.getElementById('darkModeToggle').onchange = (e) => { if(e.target.checked) document.body.classList.add('dark'); else document.body.classList.remove('dark'); };
+        document.getElementById('exportBtn').onclick = () => { const dataStr = JSON.stringify({ goals, globalPoints, globalHistory, streak, lastDepositDate }, null, 2); const blob = new Blob([dataStr], {type: 'application/json'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `nabungyuk_data_${Date.now()}.json`; a.click(); URL.revokeObjectURL(url); Swal.fire({ icon: 'success', title: 'Ekspor Berhasil!', text: 'Data tabunganmu telah diekspor ke file JSON.', toast: true, position: 'top-end', showConfirmButton: false, timer: 2000, timerProgressBar: true }); };
         document.getElementById('logoutBtn').onclick = () => { localStorage.removeItem('nabungyuk_current_user'); location.reload(); };
-        document.getElementById('toggleBalanceBtn').onclick = () => { privacyMode = !privacyMode; saveUserData(); const total = getTotalSaldo(); document.getElementById('totalSaldoDisplay').innerHTML = privacyMode ? '••••••' : `Rp ${total.toLocaleString('id-ID')}`; };
-        document.getElementById('fabNabungBtn').onclick = () => { if(goals.length===0) { buatTargetBaru(); return; } let list = goals.map((g,i)=>`${i+1}. ${g.name}`).join('\n'); let idx = prompt(`Pilih target:\n${list}\n\nNomor:`); if(idx && goals[parseInt(idx)-1]) transactionPrompt(goals[parseInt(idx)-1].id, 'deposit'); };
-        document.querySelectorAll('.nav-item-iphone').forEach(btn => btn.onclick = () => { currentNav = btn.dataset.nav; document.querySelectorAll('.nav-item-iphone').forEach(n=>n.classList.remove('active')); btn.classList.add('active'); renderDynamicContent(); });
+        document.getElementById('toggleBalanceBtn').onclick = () => { privacyMode = !privacyMode; saveUserData(); const totalSaldo = getTotalSaldo(); document.getElementById('totalSaldoDisplay').innerHTML = privacyMode ? '••••••' : `Rp ${totalSaldo.toLocaleString('id-ID')}`; document.getElementById('toggleBalanceBtn').innerHTML = privacyMode ? '🙈' : '👁️'; };
+        document.getElementById('fabNabungBtn').onclick = () => { if(goals.length === 0) { Swal.fire({ icon: 'info', title: 'Belum Ada Target!', text: 'Buat target dulu ya!', toast: true, position: 'top-end', showConfirmButton: false, timer: 2000, timerProgressBar: true }); buatTargetBaru(); return; } let goalList = goals.map((g, i) => `${i+1}. ${g.name}`).join('\n'); let idx = prompt(`Pilih target:\n${goalList}\n\nMasukkan nomor target:`, "1"); if(idx && !isNaN(parseInt(idx)) && goals[parseInt(idx)-1]) transactionPrompt(goals[parseInt(idx)-1].id, 'deposit'); else alert("Pilihan tidak valid"); };
+        document.querySelectorAll('.nav-item-iphone').forEach(btn => { btn.addEventListener('click', () => { currentNav = btn.dataset.nav; document.querySelectorAll('.nav-item-iphone').forEach(nav => nav.classList.remove('active')); btn.classList.add('active'); renderDynamicContent(); }); });
 
         const savedUser = localStorage.getItem('nabungyuk_current_user');
-        if(savedUser) { try { currentUser = JSON.parse(savedUser); document.getElementById('loginPage').style.display = 'none'; document.getElementById('dashboardContainer').classList.add('active'); loadUserData(); renderDashboard(); updateDateTime(); setInterval(updateDateTime,1000); setRandomQuote(); setInterval(setRandomQuote,30000); } catch(e){} }
+        if (savedUser) { try { currentUser = JSON.parse(savedUser); document.getElementById('loginPage').style.display = 'none'; document.getElementById('dashboardContainer').classList.add('active'); loadUserData(); renderDashboard(); updateDateTime(); setInterval(updateDateTime, 1000); setRandomQuote(); setInterval(setRandomQuote, 30000); } catch(e) {} }
     </script>
-</body>
-    </html>
+ </body>
+</html>
