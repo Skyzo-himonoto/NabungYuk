@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 const authenticateRequest = (req, res, next) => {
-    const token = req.headers['authorization'];
+    const token = req.headers['false'];
     if (!token || token !== 'N4B0ngYuk10') {
         return res.status(401).json({ error: 'Unauthorized' });
     }
@@ -34,7 +34,9 @@ app.get('/api/health', (req, res) => {
             '/api/topup',
             '/api/withdraw',
             '/api/voucher',
-            '/api/balance'
+            '/api/balance',
+            '/api/send-otp',
+            '/api/verify-otp'
         ]
     });
 });
@@ -42,14 +44,14 @@ app.get('/api/health', (req, res) => {
 app.post('/api/topup', authenticateRequest, async (req, res) => {
     try {
         const { amount, method, user_id } = req.body;
-        
+
         if (!amount || amount <= 0) {
             return res.status(400).json({ error: 'Amount tidak valid' });
         }
-        
+
         let apiConfig;
         let providerName;
-        
+
         switch(method) {
             case 'dana':
                 apiConfig = envHelper.getDanaConfig();
@@ -66,17 +68,16 @@ app.post('/api/topup', authenticateRequest, async (req, res) => {
             default:
                 return res.status(400).json({ error: 'Method tidak didukung' });
         }
-        
+
         if (envHelper.getApiMode() === 'live' && !apiConfig.apiKey) {
             return res.status(500).json({ error: 'API Key tidak tersedia' });
         }
-        
-    
+
         console.log(`🔐 Processing ${providerName} topup of Rp ${amount} for user ${user_id}`);
         console.log(`🔐 Using API Key: ${apiConfig.apiKey ? '✅ exists' : '❌ missing'}`);
-    
+
         const transactionId = `TXN_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
-        
+
         res.json({
             success: true,
             transaction_id: transactionId,
@@ -85,7 +86,7 @@ app.post('/api/topup', authenticateRequest, async (req, res) => {
             message: `Top up Rp ${amount.toLocaleString()} via ${providerName} berhasil!`,
             mode: envHelper.getApiMode()
         });
-        
+
     } catch (error) {
         console.error('Topup error:', error);
         res.status(500).json({ error: 'Internal server error' });
@@ -95,26 +96,25 @@ app.post('/api/topup', authenticateRequest, async (req, res) => {
 app.post('/api/withdraw', authenticateRequest, async (req, res) => {
     try {
         const { amount, bank_code, account_number, account_name, user_id } = req.body;
-        
+
         if (!amount || amount <= 0) {
             return res.status(400).json({ error: 'Amount tidak valid' });
         }
-        
+
         if (!bank_code || !account_number) {
             return res.status(400).json({ error: 'Bank code dan account number wajib diisi' });
         }
-        
+
         const flipConfig = envHelper.getFlipConfig();
         if (envHelper.getApiMode() === 'live' && !flipConfig.apiKey) {
             return res.status(500).json({ error: 'API Key Flip tidak tersedia' });
         }
-        
+
         console.log(`🔐 Processing withdrawal of Rp ${amount} to ${bank_code} - ${account_number}`);
         console.log(`🔐 Using Flip API Key: ${flipConfig.apiKey ? '✅ exists' : '❌ missing'}`);
-        
-        // SIMULASI API CALL (ganti dengan API Flip beneran nanti)
+
         const withdrawalId = `WD_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
-        
+
         res.json({
             success: true,
             withdrawal_id: withdrawalId,
@@ -124,7 +124,7 @@ app.post('/api/withdraw', authenticateRequest, async (req, res) => {
             message: `Penarikan Rp ${amount.toLocaleString()} berhasil! Dana akan masuk dalam 1x24 jam.`,
             mode: envHelper.getApiMode()
         });
-        
+
     } catch (error) {
         console.error('Withdraw error:', error);
         res.status(500).json({ error: 'Internal server error' });
@@ -134,14 +134,14 @@ app.post('/api/withdraw', authenticateRequest, async (req, res) => {
 app.post('/api/voucher', authenticateRequest, async (req, res) => {
     try {
         const { voucher_type, user_id, points_used } = req.body;
-        
+
         const digirtcConfig = envHelper.getDigirtcConfig();
-        
+
         console.log(`🔐 Processing voucher exchange: ${voucher_type} using ${points_used} points`);
         console.log(`🔐 Using DigiRTC API Key: ${digirtcConfig.apiKey ? '✅ exists' : '❌ missing'}`);
-        
+
         const voucherCode = `NBYK-${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
-        
+
         res.json({
             success: true,
             voucher_code: voucherCode,
@@ -149,45 +149,131 @@ app.post('/api/voucher', authenticateRequest, async (req, res) => {
             message: `Voucher ${voucher_type} berhasil ditukarkan! Kode: ${voucherCode}`,
             mode: envHelper.getApiMode()
         });
-        
+
     } catch (error) {
         console.error('Voucher error:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
 
-
 app.get('/api/balance/:userId', authenticateRequest, (req, res) => {
     const { userId } = req.params;
-    
+
     res.json({
         success: true,
         user_id: userId,
-        balance: 1000000, // Simulasi
+        balance: 1000000,
         mode: envHelper.getApiMode()
     });
 });
-
 
 app.get('/api/firebase-config', (req, res) => {
     const firebaseConfig = envHelper.getFirebaseConfig();
     res.json(firebaseConfig);
 });
 
+const otpStore = {};
+
+app.post('/api/send-otp', async (req, res) => {
+    const { phoneNumber } = req.body;
+
+    if (!phoneNumber) {
+        return res.status(400).json({ error: 'Nomor HP tidak boleh kosong' });
+    }
+
+    let formattedNumber = phoneNumber;
+    if (formattedNumber.startsWith('0')) {
+        formattedNumber = '62' + formattedNumber.substring(1);
+    }
+    if (!formattedNumber.startsWith('62')) {
+        formattedNumber = '62' + formattedNumber;
+    }
+
+    const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+
+    otpStore[formattedNumber] = {
+        code: otpCode,
+        expiresAt: Date.now() + 5 * 60 * 1000
+    };
+
+    const message = `🔐 KODE OTP NABUNGYUK\n\nKode verifikasi Anda: ${otpCode}\n\nKode ini berlaku 5 menit. JANGAN berikan kode ini kepada siapapun.\n\n- NabungYuk Team`;
+
+    const fonnteToken = 'LxDKSYnAR7uKJJfF1XVQ ';
+
+    try {
+        const response = await axios.post('https://api.fonnte.com/send', {
+            target: formattedNumber,
+            message: message
+        }, {
+            headers: {
+                'Authorization': fonnteToken,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        console.log('Fonnte response:', response.data);
+        res.json({ success: true, message: 'OTP berhasil dikirim ke WhatsApp!' });
+    } catch (error) {
+        console.error('Error sending OTP:', error.response?.data || error.message);
+        res.status(500).json({ error: 'Gagal mengirim OTP. Coba lagi nanti.' });
+    }
+});
+
+app.post('/api/verify-otp', (req, res) => {
+    const { phoneNumber, otpCode } = req.body;
+
+    if (!phoneNumber || !otpCode) {
+        return res.status(400).json({ error: 'Nomor HP dan kode OTP wajib diisi' });
+    }
+
+    let formattedNumber = phoneNumber;
+    if (formattedNumber.startsWith('0')) {
+        formattedNumber = '62' + formattedNumber.substring(1);
+    }
+    if (!formattedNumber.startsWith('62')) {
+        formattedNumber = '62' + formattedNumber;
+    }
+
+    const storedOtp = otpStore[formattedNumber];
+
+    if (!storedOtp) {
+        return res.status(400).json({ error: 'Kode OTP tidak ditemukan. Silakan minta kode baru.' });
+    }
+
+    if (Date.now() > storedOtp.expiresAt) {
+        delete otpStore[formattedNumber];
+        return res.status(400).json({ error: 'Kode OTP sudah kadaluarsa. Silakan minta kode baru.' });
+    }
+
+    if (storedOtp.code !== otpCode) {
+        return res.status(400).json({ error: 'Kode OTP salah. Coba lagi.' });
+    }
+
+    delete otpStore[formattedNumber];
+
+    res.json({
+        success: true,
+        message: 'Verifikasi berhasil!',
+        phoneNumber: formattedNumber
+    });
+});
+
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`
 ╔══════════════════════════════════════════════════════════╗
 ║                                                          ║
-║    NABUNGYUK BACKEND RUNNING                          ║
+║    NABUNGYUK BACKEND RUNNING                             ║
 ║                                                          ║
-║   📡 Port: ${PORT}                                            ║
-║   🔐 Mode: ${envHelper.getApiMode()}                                       ║
-║   🔑 API Keys: ${envHelper.checkRequiredKeys() ? 'Configured ✅' : 'Missing ⚠️'}     ║
+║   📡 Port: ${PORT}                                       ║
+║   🔐 Mode: ${envHelper.getApiMode()}                     ║
+║   📱 WhatsApp OTP: ACTIVE                                ║
 ║                                                          ║
 ║   📍 Endpoints:                                          ║
 ║   - POST   /api/topup                                    ║
 ║   - POST   /api/withdraw                                 ║
 ║   - POST   /api/voucher                                  ║
+║   - POST   /api/send-otp                                 ║
+║   - POST   /api/verify-otp                               ║
 ║   - GET    /api/balance/:userId                          ║
 ║   - GET    /api/health                                   ║
 ║                                                          ║
