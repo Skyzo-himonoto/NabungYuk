@@ -206,10 +206,10 @@
         body.dark .category-header {
             background: #0F172A;
             color: #FACC15;
-       }
+        }
         body.dark .category-header:hover {
             background: #1E293B;
-       }
+        }
         .category-arrow { font-size: 12px; transition: transform 0.2s; }
         .category-content {
             max-height: 0;
@@ -307,7 +307,7 @@
             background: #FEF2F2;
             color: #B91C1C;
             text-decoration: line-through;
-        }  
+        }
         .analytics-graph {
             display: flex;
             gap: 4px;
@@ -330,16 +330,16 @@
             min-width: 20px;
             border-radius: 6px 6px 0 0;
             transition: height 0.2s;
-      }
-      .analytics-label {
+       }
+       .analytics-label {
             font-size: 9px;
             margin-top: 6px;
             color: #5B6E8C;
-      }
-      .analytics-value {
+       }
+       .analytics-value {
             font-size: 8px;
             color: #5B6E8C;
-      }
+       }
         .bottom-nav-iphone {
             position: fixed;
             bottom: 16px;
@@ -544,7 +544,7 @@
             <div class="category-accordion"><div class="category-header" onclick="toggleCategory('cat7')"><span>🧠 AI & Fitur Cerdas</span><span class="category-arrow">▼</span></div>
             <div class="category-content" id="cat7">
                 <div class="setting-row"><span class="setting-label">💡 Saran Target Cerdas (AI)</span><span class="coming-soon-badge" onclick="showComingSoon('Saran AI')">Coming Soon</span></div>
-                <div class="setting-row"><span class="setting-label">💬 Chatbot AI (Tanya Nabung)</span><span class="coming-soon-badge" onclick="showComingSoon('Chatbot AI')">Coming Soon</span></div>
+               <div class="setting-row"><span class="setting-label">💬 Chatbot AI (Tanya Nabung)</span><button class="coming-soon-badge" onclick="openChatbot()" style="cursor: pointer;">🚀 Coba Sekarang</button></div>
                 <div class="setting-row"><span class="setting-label">🗣️ Voice Command (Nabung Pake Suara)</span><span class="coming-soon-badge" onclick="showComingSoon('Voice Command')">Coming Soon</span></div>
             </div></div>
             <div class="category-accordion"><div class="category-header" onclick="toggleCategory('cat8')"><span>🔧 Lainnya (Tools)</span><span class="category-arrow">▼</span></div>
@@ -813,7 +813,7 @@
     progressPercent = Math.min(100, progressPercent); 
     
     const bulanNames = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
-
+    
     let monthlyData = [0,0,0,0,0,0,0,0,0,0,0,0];
     globalHistory.filter(h => h.type === 'deposit').forEach(h => {
         let month = new Date(h.timestamp).getMonth();
@@ -837,6 +837,8 @@
     
     container.innerHTML = `
         <div class="section-title">📊 Statistik Nabung</div>
+        
+        <!-- 3 kartu ringkasan utama -->
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px;">
             <div class="goal-card" style="padding: 10px; text-align: center;">
                 <div style="font-size: 20px;">💰</div>
@@ -855,6 +857,7 @@
             </div>
         </div>
         
+        <!-- Progress Keseluruhan (dibatasi 100%) -->
         <div class="goal-card" style="margin-bottom: 16px;">
             <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
                 <strong>📈 Progress Keseluruhan</strong>
@@ -864,6 +867,7 @@
             ${progressPercent >= 100 ? '<div style="font-size: 11px; color: #10B981; margin-top: 6px;">🎉 Selamat! Kamu sudah mencapai semua target! 🎉</div>' : ''}
         </div>
         
+        <!-- Grafik dengan scroll -->
         <div class="goal-card" style="margin-bottom: 16px; overflow-x: auto; -webkit-overflow-scrolling: touch;">
             <strong>📊 Grafik Setoran per Bulan</strong>
             <div style="display: flex; gap: 6px; margin-top: 14px; min-width: 624px; padding-bottom: 6px;">
@@ -1170,6 +1174,50 @@
             if (!str) return '';
             return str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m]));
         }
+        
+
+async function openChatbot() {
+    const { value: question } = await Swal.fire({
+        title: '🤖 AI Nabung Assistant',
+        text: 'Tanya apa saja soal nabung, target, atau motivasi!',
+        input: 'textarea',
+        inputPlaceholder: 'Contoh: Gimana cara nabung 10 juta dalam 6 bulan?',
+        showCancelButton: true,
+        confirmButtonText: '💬 Kirim',
+        cancelButtonText: 'Tutup'
+    });
+    
+    if (!question) return;
+    
+    try {
+        const response = await fetch(`${BACKEND_URL}/api/ai/chat`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: question })
+        });
+        const data = await response.json();
+        
+        Swal.fire({
+            title: '🤖 Jawaban AI',
+            html: `<div style="text-align: left; background: #F1F5F9; padding: 16px; border-radius: 16px;">
+                    <div style="font-size: 14px; margin-bottom: 8px;">📝 <strong>Kamu:</strong> ${escapeHtml(question)}</div>
+                    <div style="font-size: 14px;">🤖 <strong>AI NabungYuk:</strong><br>${escapeHtml(data.reply)}</div>
+                    ${data.mode === 'local' ? '<div style="font-size: 10px; color: #94A3B8; margin-top: 12px;">⚠️ Mode offline</div>' : ''}
+                   </div>`,
+            confirmButtonText: 'Tanya Lagi',
+            showCancelButton: true,
+            cancelButtonText: 'Tutup'
+        }).then((result) => {
+            if (result.isConfirmed) openChatbot();
+        });
+        
+    } catch (error) {
+        Swal.fire('Error', 'Gagal menghubungi AI. Coba lagi.', 'error');
+    }
+ }
+
+
+      window.openChatbot = openChatbot;
 
         const sendOtpBtn = document.getElementById('sendOtpBtn');
         const verifyOtpBtn = document.getElementById('verifyOtpBtn');
@@ -1378,5 +1426,5 @@
             } catch(e) {}
         }
     </script>
-  </body>
+</body>
 </html>
