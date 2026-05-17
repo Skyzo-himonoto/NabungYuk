@@ -166,7 +166,14 @@
             border-bottom: 1px solid #E9EEF3;
         }
         body.dark .setting-row { border-bottom-color: #334155; }
-        .setting-label { font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 10px; }
+        .setting-label { 
+            font-weight: 500; 
+            font-size: 14px; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            
+       }
         .coming-soon-badge {
             background: #FEF3C7;
             color: #CA8A04;
@@ -293,7 +300,6 @@
             color: #B91C1C;
             text-decoration: line-through;
         }
-        
         
 .analytics-graph {
     display: flex;
@@ -431,11 +437,11 @@
         <div class="social-buttons">
             <button class="social-btn" id="loginGoogle"><img class="socmed-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google"> Google</button>
             <button class="social-btn" id="loginGithub"><svg class="socmed-logo" viewBox="0 0 24 24" fill="#181717"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.6.113.793-.26.793-.58 0-.287-.01-1.05-.015-2.06-3.338.726-4.043-1.61-4.043-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.73.083-.73 1.205.085 1.84 1.237 1.84 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.775.418-1.305.762-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.123-.3-.535-1.52.117-3.16 0 0 1.008-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.29-1.552 3.297-1.23 3.297-1.23.653 1.64.24 2.86.118 3.16.768.84 1.233 1.91 1.233 3.22 0 4.61-2.804 5.62-5.476 5.92.43.37.823 1.102.823 2.22 0 1.6-.015 2.89-.015 3.28 0 .322.192.696.8.58C20.565 21.795 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg> GitHub</button>
-            <button class="social-btn disabled" id="loginFacebook"><svg class="socmed-logo" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.96h-1.5c-1.5 0-1.96.93-1.96 1.89v2.26h3.32l-.53 3.49h-2.8V24C19.62 23.1 24 18.1 24 12.07z"/></svg> Facebook <span>(Soon)</span></button>
-            <button class="social-btn disabled" id="loginApple"><svg class="socmed-logo" viewBox="0 0 24 24" fill="#000"><path d="M16.365 3.588c.8-.926 1.335-2.21 1.152-3.498-.997.07-2.229.656-2.965 1.55-.672.81-1.266 2.11-1.072 3.34 1.117.072 2.258-.553 2.885-1.392zM21 18.914c-.563 1.226-1.264 2.348-2.187 3.217-1.066.98-1.944 1.135-3.171.605-1.102-.467-2.117-.475-3.253.003-1.453.62-2.12.481-3.18-.485-.92-.841-1.626-1.967-2.189-3.2-1.04-2.286-1.104-5.206.115-7.525.869-1.656 2.226-2.67 3.703-2.915 1.075-.178 2.087.151 2.808.609.271.17.512.368.777.524.317.19.718.246 1.031.076.297-.163.587-.341.886-.489.933-.449 1.987-.826 3.092-.564.924.219 1.7.948 2.089 1.891-2.008 1.134-1.791 3.743.244 4.617-.634 1.4-1.467 2.106-2.465 2.106-.246 0-.497-.028-.748-.078-.696.13-1.347.479-1.877.959z"/></svg> Apple <span>(Soon)</span></button>
+                <button class="social-btn" id="loginWhatsapp"><svg class="socmed-logo" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.472-.15-.67.15-.198.299-.767.967-.94 1.165-.173.199-.347.224-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.058-.173-.298-.018-.459.13-.607.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.15-.67-1.614-.918-2.21-.242-.58-.488-.5-.67-.511-.173-.01-.372-.01-.572-.01-.2 0-.523.074-.797.372s-1.045 1.021-1.045 2.489 1.066 2.885 1.216 3.084c.149.198 2.095 3.2 5.071 4.486.708.307 1.263.49 1.694.626.713.226 1.36.194 1.874.118.573-.085 1.758-.719 2.006-1.413.248-.694.248-1.288.174-1.413-.074-.125-.272-.199-.569-.348zM12.002 21.576c-1.183 0-2.34-.309-3.34-.887l-.24-.143-2.465.647.658-2.403-.156-.25C5.475 17.472 4.6 15.339 4.6 13.09c0-4.071 3.312-7.381 7.382-7.381s7.382 3.31 7.382 7.381-3.312 7.382-7.382 7.382z"/></svg> WhatsApp</svg><span>(login otp)</span></button>
+                <button class="social-btn disabled" id="loginApple"><svg class="socmed-logo" viewBox="0 0 24 24" fill="#000"><path d="M16.365 3.588c.8-.926 1.335-2.21 1.152-3.498-.997.07-2.229.656-2.965 1.55-.672.81-1.266 2.11-1.072 3.34 1.117.072 2.258-.553 2.885-1.392zM21 18.914c-.563 1.226-1.264 2.348-2.187 3.217-1.066.98-1.944 1.135-3.171.605-1.102-.467-2.117-.475-3.253.003-1.453.62-2.12.481-3.18-.485-.92-.841-1.626-1.967-2.189-3.2-1.04-2.286-1.104-5.206.115-7.525.869-1.656 2.226-2.67 3.703-2.915 1.075-.178 2.087.151 2.808.609.271.17.512.368.777.524.317.19.718.246 1.031.076.297-.163.587-.341.886-.489.933-.449 1.987-.826 3.092-.564.924.219 1.7.948 2.089 1.891-2.008 1.134-1.791 3.743.244 4.617-.634 1.4-1.467 2.106-2.465 2.106-.246 0-.497-.028-.748-.078-.696.13-1.347.479-1.877.959z"/></svg> Apple <span>(Soon)</span></button>
             <button class="social-btn disabled" id="loginTiktok"><svg class="socmed-logo" viewBox="0 0 24 24" fill="#000000"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg> TikTok <span>(Soon)</span></button>
             <button class="social-btn disabled" id="loginTwitter"><svg class="socmed-logo" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"/></svg> X <span>(Soon)</span></button>
-            <button class="social-btn" id="loginWhatsapp"><svg class="socmed-logo" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.472-.15-.67.15-.198.299-.767.967-.94 1.165-.173.199-.347.224-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.058-.173-.298-.018-.459.13-.607.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.15-.67-1.614-.918-2.21-.242-.58-.488-.5-.67-.511-.173-.01-.372-.01-.572-.01-.2 0-.523.074-.797.372s-1.045 1.021-1.045 2.489 1.066 2.885 1.216 3.084c.149.198 2.095 3.2 5.071 4.486.708.307 1.263.49 1.694.626.713.226 1.36.194 1.874.118.573-.085 1.758-.719 2.006-1.413.248-.694.248-1.288.174-1.413-.074-.125-.272-.199-.569-.348zM12.002 21.576c-1.183 0-2.34-.309-3.34-.887l-.24-.143-2.465.647.658-2.403-.156-.25C5.475 17.472 4.6 15.339 4.6 13.09c0-4.071 3.312-7.381 7.382-7.381s7.382 3.31 7.382 7.381-3.312 7.382-7.382 7.382z"/></svg> WhatsApp</button>
+             <button class="social-btn disabled" id="loginFacebook"><svg class="socmed-logo" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.96h-1.5c-1.5 0-1.96.93-1.96 1.89v2.26h3.32l-.53 3.49h-2.8V24C19.62 23.1 24 18.1 24 12.07z"/></svg> Facebook <span>(Soon)</span></button>
         </div>
 
         <div class="divider"><span class="divider-line"></span><span>atau</span><span class="divider-line"></span></div>
@@ -797,11 +803,13 @@
     function renderAnalyticsPage(container) {
     const totalSaldo = getTotalSaldo();
     const totalTarget = goals.reduce((sum, g) => sum + g.targetAmount, 0);
+    // FIX: Progress maksimal 100%, gabisa lebih
     let progressPercent = totalTarget > 0 ? (totalSaldo / totalTarget) * 100 : 0;
-    progressPercent = Math.min(100, progressPercent); 
+    progressPercent = Math.min(100, progressPercent); // ← INI PERBAIKANNYA!
     
     const bulanNames = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
     
+    // Hitung data per bulan dari history deposit
     let monthlyData = [0,0,0,0,0,0,0,0,0,0,0,0];
     globalHistory.filter(h => h.type === 'deposit').forEach(h => {
         let month = new Date(h.timestamp).getMonth();
@@ -809,7 +817,8 @@
     });
     
     let maxValue = Math.max(...monthlyData, 1);
-   
+    
+    // Bikin bar chart
     let bars = '';
     for(let i = 0; i < 12; i++) {
         let height = Math.max((monthlyData[i] / maxValue) * 50, 16);
@@ -845,6 +854,7 @@
             </div>
         </div>
         
+        <!-- Progress Keseluruhan (dibatasi 100%) -->
         <div class="goal-card" style="margin-bottom: 16px;">
             <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
                 <strong>📈 Progress Keseluruhan</strong>
@@ -854,15 +864,18 @@
             ${progressPercent >= 100 ? '<div style="font-size: 11px; color: #10B981; margin-top: 6px;">🎉 Selamat! Kamu sudah mencapai semua target! 🎉</div>' : ''}
         </div>
         
+        <!-- Grafik dengan scroll -->
         <div class="goal-card" style="margin-bottom: 16px; overflow-x: auto; -webkit-overflow-scrolling: touch;">
             <strong>📊 Grafik Setoran per Bulan</strong>
             <div style="display: flex; gap: 6px; margin-top: 14px; min-width: 624px; padding-bottom: 6px;">
                 ${bars}
             </div>
             <div style="font-size: 9px; color: #94A3B8; text-align: center; margin-top: 8px;">
+                ↳ Geser ke kanan ↴
             </div>
         </div>
         
+        <!-- Streak & info tambahan -->
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
             <div class="goal-card" style="padding: 10px; text-align: center;">
                 <div style="font-size: 20px;">🔥</div>
@@ -1367,4 +1380,4 @@
         }
     </script>
 </body>
-</html>
+    </html>
