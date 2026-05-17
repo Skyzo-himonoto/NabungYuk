@@ -202,6 +202,14 @@
             transition: background 0.2s;
         }
         .category-header:hover { background: #F1F5F9; }
+
+        body.dark .category-header {
+            background: #0F172A;
+            color: #FACC15;
+       }
+        body.dark .category-header:hover {
+            background: #1E293B;
+       }
         .category-arrow { font-size: 12px; transition: transform 0.2s; }
         .category-content {
             max-height: 0;
@@ -299,41 +307,39 @@
             background: #FEF2F2;
             color: #B91C1C;
             text-decoration: line-through;
-        }
-        
-.analytics-graph {
-    display: flex;
-    gap: 4px;
-    align-items: flex-end;
-    height: 120px;
-    margin-top: 12px;
-    overflow-x: auto;
-    overflow-y: visible;
-    padding-bottom: 8px;
-    -webkit-overflow-scrolling: touch;
-}
-.analytics-bar-wrapper {
-    flex: 1;
-    min-width: 32px;
-    text-align: center;
-}
-.analytics-bar {
-    background: #FACC15;
-    width: 100%;
-    min-width: 20px;
-    border-radius: 6px 6px 0 0;
-    transition: height 0.2s;
-}
-.analytics-label {
-    font-size: 9px;
-    margin-top: 6px;
-    color: #5B6E8C;
-}
-.analytics-value {
-    font-size: 8px;
-    color: #5B6E8C;
-}
-
+        }  
+        .analytics-graph {
+            display: flex;
+            gap: 4px;
+            align-items: flex-end;
+            height: 120px;
+            margin-top: 12px;
+            overflow-x: auto;
+            overflow-y: visible;
+            padding-bottom: 8px;
+            -webkit-overflow-scrolling: touch;
+       }
+       .analytics-bar-wrapper {
+            flex: 1;
+            min-width: 32px;
+            text-align: center;
+       }
+       .analytics-bar {
+            background: #FACC15;
+            width: 100%;
+            min-width: 20px;
+            border-radius: 6px 6px 0 0;
+            transition: height 0.2s;
+      }
+      .analytics-label {
+            font-size: 9px;
+            margin-top: 6px;
+            color: #5B6E8C;
+      }
+      .analytics-value {
+            font-size: 8px;
+            color: #5B6E8C;
+      }
         .bottom-nav-iphone {
             position: fixed;
             bottom: 16px;
@@ -803,13 +809,11 @@
     function renderAnalyticsPage(container) {
     const totalSaldo = getTotalSaldo();
     const totalTarget = goals.reduce((sum, g) => sum + g.targetAmount, 0);
-    // FIX: Progress maksimal 100%, gabisa lebih
     let progressPercent = totalTarget > 0 ? (totalSaldo / totalTarget) * 100 : 0;
-    progressPercent = Math.min(100, progressPercent); // ← INI PERBAIKANNYA!
+    progressPercent = Math.min(100, progressPercent); 
     
     const bulanNames = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
-    
-    // Hitung data per bulan dari history deposit
+
     let monthlyData = [0,0,0,0,0,0,0,0,0,0,0,0];
     globalHistory.filter(h => h.type === 'deposit').forEach(h => {
         let month = new Date(h.timestamp).getMonth();
@@ -818,7 +822,6 @@
     
     let maxValue = Math.max(...monthlyData, 1);
     
-    // Bikin bar chart
     let bars = '';
     for(let i = 0; i < 12; i++) {
         let height = Math.max((monthlyData[i] / maxValue) * 50, 16);
@@ -834,8 +837,6 @@
     
     container.innerHTML = `
         <div class="section-title">📊 Statistik Nabung</div>
-        
-        <!-- 3 kartu ringkasan utama -->
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px;">
             <div class="goal-card" style="padding: 10px; text-align: center;">
                 <div style="font-size: 20px;">💰</div>
@@ -854,7 +855,6 @@
             </div>
         </div>
         
-        <!-- Progress Keseluruhan (dibatasi 100%) -->
         <div class="goal-card" style="margin-bottom: 16px;">
             <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
                 <strong>📈 Progress Keseluruhan</strong>
@@ -864,7 +864,6 @@
             ${progressPercent >= 100 ? '<div style="font-size: 11px; color: #10B981; margin-top: 6px;">🎉 Selamat! Kamu sudah mencapai semua target! 🎉</div>' : ''}
         </div>
         
-        <!-- Grafik dengan scroll -->
         <div class="goal-card" style="margin-bottom: 16px; overflow-x: auto; -webkit-overflow-scrolling: touch;">
             <strong>📊 Grafik Setoran per Bulan</strong>
             <div style="display: flex; gap: 6px; margin-top: 14px; min-width: 624px; padding-bottom: 6px;">
@@ -1379,5 +1378,5 @@
             } catch(e) {}
         }
     </script>
-</body>
-    </html>
+  </body>
+</html>
