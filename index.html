@@ -293,6 +293,40 @@
             color: #B91C1C;
             text-decoration: line-through;
         }
+        
+        
+.analytics-graph {
+    display: flex;
+    gap: 4px;
+    align-items: flex-end;
+    height: 120px;
+    margin-top: 12px;
+    overflow-x: auto;
+    overflow-y: visible;
+    padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+}
+.analytics-bar-wrapper {
+    flex: 1;
+    min-width: 32px;
+    text-align: center;
+}
+.analytics-bar {
+    background: #FACC15;
+    width: 100%;
+    min-width: 20px;
+    border-radius: 6px 6px 0 0;
+    transition: height 0.2s;
+}
+.analytics-label {
+    font-size: 9px;
+    margin-top: 6px;
+    color: #5B6E8C;
+}
+.analytics-value {
+    font-size: 8px;
+    color: #5B6E8C;
+}
 
         .bottom-nav-iphone {
             position: fixed;
@@ -760,34 +794,89 @@
             container.innerHTML = html;
         }
 
-        function renderAnalyticsPage(container) {
-            const totalSaldo = getTotalSaldo();
-            const totalTarget = goals.reduce((sum, g) => sum + g.targetAmount, 0);
-            const progressPercent = totalTarget > 0 ? (totalSaldo / totalTarget * 100).toFixed(0) : 0;
-            const bulanNames = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
-            let monthlyData = [0,0,0,0,0,0,0,0,0,0,0,0];
-            globalHistory.filter(h => h.type === 'deposit').forEach(h => {
-                let month = new Date(h.timestamp).getMonth();
-                monthlyData[month] += h.amount;
-            });
-            let maxValue = Math.max(...monthlyData, 1);
-            let bars = '';
-            for(let i = 0; i < 12; i++) {
-                let height = (monthlyData[i] / maxValue) * 100;
-                bars += `<div style="flex:1; text-align:center;">
-                            <div style="background:#FACC15; height:${Math.max(height, 4)}px; width:100%; border-radius:8px; min-height:4px;"></div>
-                            <div style="font-size:10px; margin-top:6px;">${bulanNames[i]}</div>
-                            <div style="font-size:9px; color:#5B6E8C;">${monthlyData[i] > 0 ? (monthlyData[i]/1000).toFixed(0) + 'k' : '-'}</div>
-                         </div>`;
-            }
-            container.innerHTML = `<div class="section-title">📊 Statistik Nabung</div>
-                <div class="goal-card"><strong>💰 Total Tabungan</strong><br>Rp ${totalSaldo.toLocaleString('id-ID')}</div>
-                <div class="goal-card"><strong>🎯 Total Target</strong><br>Rp ${totalTarget.toLocaleString('id-ID')}</div>
-                <div class="goal-card"><strong>📈 Progress Keseluruhan</strong><br><div class="progress-bar"><div class="progress-fill" style="width:${progressPercent}%"></div></div>${progressPercent}%</div>
-                <div class="goal-card"><strong>📊 Grafik Setoran per Bulan</strong><br><div style="display:flex; gap:6px; align-items:flex-end; height:100px; margin-top:12px;">${bars}</div></div>
-                <div class="goal-card"><strong>⭐ Poin Terkumpul</strong><br>${globalPoints} Poin</div>
-                <div class="goal-card"><strong>🔥 Streak Nabung</strong><br>${streak} hari berturut-turut</div>`;
-        }
+    function renderAnalyticsPage(container) {
+    const totalSaldo = getTotalSaldo();
+    const totalTarget = goals.reduce((sum, g) => sum + g.targetAmount, 0);
+    let progressPercent = totalTarget > 0 ? (totalSaldo / totalTarget) * 100 : 0;
+    progressPercent = Math.min(100, progressPercent); 
+    
+    const bulanNames = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
+    
+    let monthlyData = [0,0,0,0,0,0,0,0,0,0,0,0];
+    globalHistory.filter(h => h.type === 'deposit').forEach(h => {
+        let month = new Date(h.timestamp).getMonth();
+        monthlyData[month] += h.amount;
+    });
+    
+    let maxValue = Math.max(...monthlyData, 1);
+   
+    let bars = '';
+    for(let i = 0; i < 12; i++) {
+        let height = Math.max((monthlyData[i] / maxValue) * 50, 16);
+        let amountText = monthlyData[i] >= 1000000 ? (monthlyData[i]/1000000).toFixed(1) + 'jt' : 
+                         monthlyData[i] >= 1000 ? (monthlyData[i]/1000).toFixed(0) + 'k' : 
+                         monthlyData[i] > 0 ? monthlyData[i].toString() : '-';
+        bars += `<div style="min-width: 52px; text-align: center;">
+                    <div style="background: linear-gradient(180deg, #FACC15, #F59E0B); height: ${height}px; width: 28px; border-radius: 10px 10px 4px 4px; margin: 0 auto;"></div>
+                    <div style="font-size: 10px; font-weight: 600; margin-top: 6px;">${bulanNames[i]}</div>
+                    <div style="font-size: 8px; color: #F59E0B;">${amountText}</div>
+                 </div>`;
+    }
+    
+    container.innerHTML = `
+        <div class="section-title">📊 Statistik Nabung</div>
+        
+        <!-- 3 kartu ringkasan utama -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px;">
+            <div class="goal-card" style="padding: 10px; text-align: center;">
+                <div style="font-size: 20px;">💰</div>
+                <div style="font-size: 10px; color: #5B6E8C;">Total Nabung</div>
+                <div style="font-size: 14px; font-weight: 700;">Rp ${totalSaldo.toLocaleString('id-ID')}</div>
+            </div>
+            <div class="goal-card" style="padding: 10px; text-align: center;">
+                <div style="font-size: 20px;">🎯</div>
+                <div style="font-size: 10px; color: #5B6E8C;">Total Target</div>
+                <div style="font-size: 14px; font-weight: 700;">Rp ${totalTarget.toLocaleString('id-ID')}</div>
+            </div>
+            <div class="goal-card" style="padding: 10px; text-align: center;">
+                <div style="font-size: 20px;">⭐</div>
+                <div style="font-size: 10px; color: #5B6E8C;">Poin Kamu</div>
+                <div style="font-size: 14px; font-weight: 700;">${globalPoints}</div>
+            </div>
+        </div>
+        
+        <div class="goal-card" style="margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                <strong>📈 Progress Keseluruhan</strong>
+                <span style="color: #F59E0B; font-weight: bold;">${progressPercent.toFixed(0)}%</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" style="width:${progressPercent}%; background: linear-gradient(90deg, #FACC15, #F59E0B);"></div></div>
+            ${progressPercent >= 100 ? '<div style="font-size: 11px; color: #10B981; margin-top: 6px;">🎉 Selamat! Kamu sudah mencapai semua target! 🎉</div>' : ''}
+        </div>
+        
+        <div class="goal-card" style="margin-bottom: 16px; overflow-x: auto; -webkit-overflow-scrolling: touch;">
+            <strong>📊 Grafik Setoran per Bulan</strong>
+            <div style="display: flex; gap: 6px; margin-top: 14px; min-width: 624px; padding-bottom: 6px;">
+                ${bars}
+            </div>
+            <div style="font-size: 9px; color: #94A3B8; text-align: center; margin-top: 8px;">
+            </div>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+            <div class="goal-card" style="padding: 10px; text-align: center;">
+                <div style="font-size: 20px;">🔥</div>
+                <div style="font-size: 10px; color: #5B6E8C;">Streak Nabung</div>
+                <div style="font-size: 14px; font-weight: 700;">${streak} hari berturut-turut</div>
+            </div>
+            <div class="goal-card" style="padding: 10px; text-align: center;">
+                <div style="font-size: 20px;">🎯</div>
+                <div style="font-size: 10px; color: #5B6E8C;">Target Aktif</div>
+                <div style="font-size: 14px; font-weight: 700;">${goals.filter(g => g.currentAmount < g.targetAmount).length} target</div>
+            </div>
+        </div>
+    `;
+}
 
         function renderVoucherPage(container) {
             let voucherList = [
@@ -1278,4 +1367,4 @@
         }
     </script>
 </body>
-    </html>
+</html>
